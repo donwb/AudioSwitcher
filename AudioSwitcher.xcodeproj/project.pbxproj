@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,7 @@
 		ED5B95DD262F1B2400FF31CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED5B95DB262F1B2400FF31CE /* Main.storyboard */; };
 		ED5B95E9262F1B2400FF31CE /* AudioSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95E8262F1B2400FF31CE /* AudioSwitcherTests.swift */; };
 		ED5B95F4262F1B2400FF31CE /* AudioSwitcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95F3262F1B2400FF31CE /* AudioSwitcherUITests.swift */; };
+		ED5B9606262F1B6300FF31CE /* SimplyCoreAudio in Frameworks */ = {isa = PBXBuildFile; productRef = ED5B9605262F1B6300FF31CE /* SimplyCoreAudio */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED5B9606262F1B6300FF31CE /* SimplyCoreAudio in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,6 +142,9 @@
 			dependencies = (
 			);
 			name = AudioSwitcher;
+			packageProductDependencies = (
+				ED5B9605262F1B6300FF31CE /* SimplyCoreAudio */,
+			);
 			productName = AudioSwitcher;
 			productReference = ED5B95D2262F1B2300FF31CE /* AudioSwitcher.app */;
 			productType = "com.apple.product-type.application";
@@ -211,6 +216,9 @@
 				Base,
 			);
 			mainGroup = ED5B95C9262F1B2300FF31CE;
+			packageReferences = (
+				ED5B9604262F1B6300FF31CE /* XCRemoteSwiftPackageReference "SimplyCoreAudio" */,
+			);
 			productRefGroup = ED5B95D3262F1B2300FF31CE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -582,6 +590,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ED5B9604262F1B6300FF31CE /* XCRemoteSwiftPackageReference "SimplyCoreAudio" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rnine/SimplyCoreAudio.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		ED5B9605262F1B6300FF31CE /* SimplyCoreAudio */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ED5B9604262F1B6300FF31CE /* XCRemoteSwiftPackageReference "SimplyCoreAudio" */;
+			productName = SimplyCoreAudio;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = ED5B95CA262F1B2300FF31CE /* Project object */;
 }
