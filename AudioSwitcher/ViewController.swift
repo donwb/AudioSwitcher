@@ -14,6 +14,7 @@ class ViewController: NSViewController {
     private var _sca: SimplyCoreAudio?
     private var _currentDevices =  [AudioDevice]()
     private var _selectedDevice: AudioDevice?
+    private var _manualChange = false
     
     @IBOutlet weak var tableView: NSTableView!
     
@@ -29,6 +30,22 @@ class ViewController: NSViewController {
         // Do any additional setup after loading the view.
         _sca = SimplyCoreAudio()
         loadDevices()
+        
+        var observer = NotificationCenter.default.addObserver(forName: .defaultOutputDeviceChanged,
+                                                               object: nil,
+                                                                queue: .main) { (notification) in
+            
+            
+            print("A change happened")
+            
+            if !self._manualChange {
+                print("Do auto change shit")
+            }
+            
+            self._manualChange = false
+            
+        }
+
         
         
     }
@@ -56,6 +73,7 @@ class ViewController: NSViewController {
 
     
     @IBAction func revertButton(_ sender: NSButton) {
+        _manualChange = true
         
         guard let selDevice = _selectedDevice else { return }
         
@@ -72,6 +90,7 @@ class ViewController: NSViewController {
         tableView.reloadData()
         
         print("Set \(selDevice.name) as default output device")
+        
         
     }
     
