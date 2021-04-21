@@ -17,9 +17,11 @@ class ViewController: NSViewController {
     private var _audioState: AudioState?
     
     private var _manualChange = false
+    private var _preventChange = true
     
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var currentDeviceLabel: NSTextField!
+    @IBOutlet weak var stickyCheckbox: NSButton!
     
     @IBOutlet weak var lockDeviceCheckbox: NSButton!
     
@@ -32,6 +34,9 @@ class ViewController: NSViewController {
         tableView.dataSource = self
 
         _audioState = AudioState.LoadAudioEnvironment()
+        guard let device = _audioState?.ActiveOutputDevice else {return}
+        
+        currentDeviceLabel.stringValue = device.name
         
         var observer = NotificationCenter.default.addObserver(forName: .defaultOutputDeviceChanged,
                                                                object: nil,
@@ -42,8 +47,17 @@ class ViewController: NSViewController {
             
             if !self._manualChange {
                 print("Do auto change shit")
-                // including refresh the list
+                if self._preventChange {
+                   // flip back to the previous default
+                    self._audioState?.RevertToSonos()
+                }
+                
             }
+            
+            // the list refresh doesn't seem to pick up new devices...
+            // but does work when a change occurs in the Sound Settings
+            self._audioState?.reload()
+            self.tableView.reloadData()
             
             self._manualChange = false
             
@@ -71,7 +85,7 @@ class ViewController: NSViewController {
     
         // hold on to selected device in case they hit the enabled button
         _selectedDevice = selectedDevice
-        print("Setting: \(selectedDevice)")
+        print("Setting: \(selectedDevice!)")
     }
 
 
@@ -84,6 +98,8 @@ class ViewController: NSViewController {
         
         tableView.reloadData()
         
+        currentDeviceLabel.stringValue = selectedDevice.name
+        
         print("Setting \(selectedDevice.name) as default output device")
     }
     
@@ -91,6 +107,13 @@ class ViewController: NSViewController {
         _audioState?.reload()
         
         tableView.reloadData()
+    }
+    
+
+    @IBAction func stickyCheckbox(_ sender: NSButton) {
+        _preventChange = (stickyCheckbox.state == .on)
+        
+        print("Prevent?: \(_preventChange)")
     }
     
     func showAlert(message: String) {

@@ -64,6 +64,12 @@ class AudioState {
         
     }
     
+    func RevertToSonos() {
+        let d = AudioDevice(name: "HIFI DSD", id: 77, enabled: false)
+        MakeActiveOutputDevice(device: d)
+        
+    }
+    
     var Devices: [AudioDevice] {
         get {
             return _devices

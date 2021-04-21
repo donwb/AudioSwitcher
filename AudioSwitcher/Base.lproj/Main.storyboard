@@ -803,7 +803,7 @@
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="LJZ-QE-Ukh">
-                                    <rect key="frame" x="1" y="118" width="238" height="16"/>
+                                    <rect key="frame" x="1" y="119" width="438" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="c55-zt-Z9a">
@@ -816,15 +816,18 @@
                                 </tableHeaderView>
                             </scrollView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rbf-qW-YYf">
-                                <rect key="frame" x="304" y="52" width="65" height="18"/>
+                                <rect key="frame" x="304" y="52" width="144" height="18"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ybn-qk-dAB">
+                                <buttonCell key="cell" type="check" title="Make Device Sticky" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ybn-qk-dAB">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="stickyCheckbox:" target="XfG-lQ-9wD" id="Nd0-Oh-XSB"/>
+                                </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i7m-Db-Rs2">
-                                <rect key="frame" x="18" y="53" width="198" height="16"/>
+                                <rect key="frame" x="18" y="53" width="282" height="16"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="aBp-fr-rko">
                                     <font key="font" metaFont="system"/>
@@ -848,6 +851,7 @@
                     <connections>
                         <outlet property="currentDeviceLabel" destination="i7m-Db-Rs2" id="krm-Dn-1cL"/>
                         <outlet property="lockDeviceCheckbox" destination="rbf-qW-YYf" id="9uC-hM-VoS"/>
+                        <outlet property="stickyCheckbox" destination="rbf-qW-YYf" id="0y6-0v-cej"/>
                         <outlet property="tableView" destination="Ikb-mz-BYq" id="s7H-Do-LSE"/>
                     </connections>
                 </viewController>
