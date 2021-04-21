@@ -51,6 +51,19 @@ class AudioState {
         
     }
     
+    func MakeActiveOutputDevice(device: AudioDevice) {
+        guard let scaDevices = _sca?.allOutputDevices else {return}
+        
+        for d in scaDevices {
+            if d.name == device.name {
+                d.isDefaultOutputDevice = true
+            }
+        }
+        
+        reload()
+        
+    }
+    
     var Devices: [AudioDevice] {
         get {
             return _devices
@@ -69,6 +82,8 @@ class AudioState {
             return active
         }
     }
+    
+    
 }
 
 // MARK: - Structs

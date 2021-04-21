@@ -11,9 +11,11 @@ import SimplyCoreAudio
 class ViewController: NSViewController {
 
     
-    private var _sca: SimplyCoreAudio?
-    private var _currentDevices =  [AudioDevice]()
+    //private var _sca: SimplyCoreAudio?
+    //private var _currentDevices =  [AudioDevice]()
     private var _selectedDevice: AudioDevice?
+    private var _audioState: AudioState?
+    
     private var _manualChange = false
     
     @IBOutlet weak var tableView: NSTableView!
@@ -30,8 +32,9 @@ class ViewController: NSViewController {
         tableView.dataSource = self
         
         // Do any additional setup after loading the view.
-        _sca = SimplyCoreAudio()
-        loadDevices()
+        //_sca = SimplyCoreAudio()
+        //loadDevices()
+        _audioState = AudioState.LoadAudioEnvironment()
         
         var observer = NotificationCenter.default.addObserver(forName: .defaultOutputDeviceChanged,
                                                                object: nil,
@@ -66,7 +69,8 @@ class ViewController: NSViewController {
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         let selItem = tableView.selectedRow
-        let selectedDevice = _currentDevices[selItem]
+        //let selectedDevice = _currentDevices[selItem]
+        let selectedDevice = _audioState?.Devices[selItem]
         
         _selectedDevice = selectedDevice
         
@@ -78,10 +82,13 @@ class ViewController: NSViewController {
     
     @IBAction func revertButton(_ sender: NSButton) {
         _manualChange = true
+        guard let selectedDevice = _selectedDevice else {return }
         
+        _audioState?.MakeActiveOutputDevice(device: selectedDevice)
+        /*
         guard let selDevice = _selectedDevice else { return }
         
-        let outputDevices = _sca?.allOutputDevices
+        let outputDevices = _audioState?.Devices
         
         for device in outputDevices! {
             if device.name == selDevice.name {
@@ -89,11 +96,11 @@ class ViewController: NSViewController {
             }
         }
         loadDevices()
-        
+        */
         
         tableView.reloadData()
         
-        print("Set \(selDevice.name) as default output device")
+        print("Set \(selectedDevice.name) as default output device")
         
         
     }
@@ -121,13 +128,16 @@ class ViewController: NSViewController {
 
 extension ViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return _currentDevices.count
+        guard let count = _audioState?.Devices.count else { return 0}
+        return count
     }
 }
 
 extension ViewController: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let device = _currentDevices[row]
+        //let device = _currentDevices[row]
+        guard let device = _audioState?.Devices[row] else { return nil }
+        
         let enabled = device.enabled
         
         if tableColumn?.identifier == NSUserInterfaceItemIdentifier(rawValue: "idColumn") {
@@ -152,7 +162,8 @@ extension ViewController: NSTableViewDelegate {
         
 //        return nil
     }
-    
+   
+    /*
     private func loadDevices() {
         _currentDevices.removeAll()
         
@@ -163,5 +174,6 @@ extension ViewController: NSTableViewDelegate {
         }
         
     }
+ */
 }
 
