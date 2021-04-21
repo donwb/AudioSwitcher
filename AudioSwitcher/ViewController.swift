@@ -87,7 +87,12 @@ class ViewController: NSViewController {
         print("Setting \(selectedDevice.name) as default output device")
     }
     
-
+    @IBAction func refreshDeviceList(_ sender: NSButton) {
+        _audioState?.reload()
+        
+        tableView.reloadData()
+    }
+    
     func showAlert(message: String) {
         let alert = NSAlert()
         alert.messageText = message
