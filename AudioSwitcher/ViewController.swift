@@ -30,10 +30,7 @@ class ViewController: NSViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
-        
-        // Do any additional setup after loading the view.
-        //_sca = SimplyCoreAudio()
-        //loadDevices()
+
         _audioState = AudioState.LoadAudioEnvironment()
         
         var observer = NotificationCenter.default.addObserver(forName: .defaultOutputDeviceChanged,
@@ -69,12 +66,11 @@ class ViewController: NSViewController {
     
     func tableViewSelectionDidChange(_ notification: Notification) {
         let selItem = tableView.selectedRow
-        //let selectedDevice = _currentDevices[selItem]
+        
         let selectedDevice = _audioState?.Devices[selItem]
-        
+    
+        // hold on to selected device in case they hit the enabled button
         _selectedDevice = selectedDevice
-        
-        
         print("Setting: \(selectedDevice)")
     }
 
@@ -82,42 +78,16 @@ class ViewController: NSViewController {
     
     @IBAction func revertButton(_ sender: NSButton) {
         _manualChange = true
+        
         guard let selectedDevice = _selectedDevice else {return }
-        
         _audioState?.MakeActiveOutputDevice(device: selectedDevice)
-        /*
-        guard let selDevice = _selectedDevice else { return }
-        
-        let outputDevices = _audioState?.Devices
-        
-        for device in outputDevices! {
-            if device.name == selDevice.name {
-                device.isDefaultOutputDevice = true
-            }
-        }
-        loadDevices()
-        */
         
         tableView.reloadData()
         
-        print("Set \(selectedDevice.name) as default output device")
-        
-        
+        print("Setting \(selectedDevice.name) as default output device")
     }
     
-    @IBAction func testNewClass(_ sender: NSButton) {
-        
-        let audioState = AudioState.LoadAudioEnvironment()
-        print(audioState.Devices)
-        
-        let activeDevice = audioState.ActiveOutputDevice
-        print(activeDevice)
-        
-        audioState.reload()
-        print(audioState.Devices)
-        
-        
-    }
+
     func showAlert(message: String) {
         let alert = NSAlert()
         alert.messageText = message
@@ -159,21 +129,7 @@ extension ViewController: NSTableViewDelegate {
             
             return cellView
         }
-        
-//        return nil
     }
    
-    /*
-    private func loadDevices() {
-        _currentDevices.removeAll()
-        
-        let outputDevices = _sca?.allOutputDevices
-        for d in outputDevices! {
-            let ad = AudioDevice(name: d.name, id: d.id, enabled: d.isDefaultOutputDevice)
-            _currentDevices.append(ad)
-        }
-        
-    }
- */
 }
 
