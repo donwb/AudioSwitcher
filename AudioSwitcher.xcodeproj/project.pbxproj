@@ -14,6 +14,7 @@
 		ED5B95E9262F1B2400FF31CE /* AudioSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95E8262F1B2400FF31CE /* AudioSwitcherTests.swift */; };
 		ED5B95F4262F1B2400FF31CE /* AudioSwitcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95F3262F1B2400FF31CE /* AudioSwitcherUITests.swift */; };
 		ED5B9606262F1B6300FF31CE /* SimplyCoreAudio in Frameworks */ = {isa = PBXBuildFile; productRef = ED5B9605262F1B6300FF31CE /* SimplyCoreAudio */; };
+		ED5B960B26306C8300FF31CE /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B960A26306C8300FF31CE /* AudioState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		ED5B95EF262F1B2400FF31CE /* AudioSwitcherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioSwitcherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5B95F3262F1B2400FF31CE /* AudioSwitcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSwitcherUITests.swift; sourceTree = "<group>"; };
 		ED5B95F5262F1B2400FF31CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		ED5B960A26306C8300FF31CE /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 			children = (
 				ED5B95D5262F1B2300FF31CE /* AppDelegate.swift */,
 				ED5B95D7262F1B2300FF31CE /* ViewController.swift */,
+				ED5B960A26306C8300FF31CE /* AudioState.swift */,
 				ED5B95D9262F1B2400FF31CE /* Assets.xcassets */,
 				ED5B95DB262F1B2400FF31CE /* Main.storyboard */,
 				ED5B95DE262F1B2400FF31CE /* Info.plist */,
@@ -263,6 +266,7 @@
 			files = (
 				ED5B95D8262F1B2300FF31CE /* ViewController.swift in Sources */,
 				ED5B95D6262F1B2300FF31CE /* AppDelegate.swift in Sources */,
+				ED5B960B26306C8300FF31CE /* AudioState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

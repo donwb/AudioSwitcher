@@ -17,7 +17,9 @@ class ViewController: NSViewController {
     private var _manualChange = false
     
     @IBOutlet weak var tableView: NSTableView!
+    @IBOutlet weak var currentDeviceLabel: NSTextField!
     
+    @IBOutlet weak var lockDeviceCheckbox: NSButton!
     
 
     
@@ -40,6 +42,7 @@ class ViewController: NSViewController {
             
             if !self._manualChange {
                 print("Do auto change shit")
+                // including refresh the list
             }
             
             self._manualChange = false
@@ -66,6 +69,7 @@ class ViewController: NSViewController {
         let selectedDevice = _currentDevices[selItem]
         
         _selectedDevice = selectedDevice
+        
         
         print("Setting: \(selectedDevice)")
     }
@@ -94,6 +98,19 @@ class ViewController: NSViewController {
         
     }
     
+    @IBAction func testNewClass(_ sender: NSButton) {
+        
+        let audioState = AudioState.LoadAudioEnvironment()
+        print(audioState.Devices)
+        
+        let activeDevice = audioState.ActiveOutputDevice
+        print(activeDevice)
+        
+        audioState.reload()
+        print(audioState.Devices)
+        
+        
+    }
     func showAlert(message: String) {
         let alert = NSAlert()
         alert.messageText = message
@@ -148,13 +165,3 @@ extension ViewController: NSTableViewDelegate {
     }
 }
 
-struct AudioDevice: Codable {
-    init(name: String, id: UInt32, enabled: Bool){
-        self.name = name
-        self.id = id
-        self.enabled = enabled
-    }
-    let name: String
-    let id: UInt32
-    let enabled: Bool
-}
