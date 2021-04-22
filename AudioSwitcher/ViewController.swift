@@ -144,7 +144,8 @@ extension ViewController: NSTableViewDelegate {
             guard let cellView = tableView.makeView(withIdentifier: cellID, owner: self) as? NSTableCellView else {return nil}
             
             cellView.textField?.integerValue = Int(device.id) ?? 0
-            cellView.textField?.textColor = (enabled ? .green : .red)
+            cellView.textField?.textColor = (enabled ? .systemGreen : .red)
+            cellView.textField?.font = (enabled ? NSFont.boldSystemFont(ofSize: 12.0) : nil)
             
             return cellView
             
@@ -153,7 +154,9 @@ extension ViewController: NSTableViewDelegate {
             guard let cellView = tableView.makeView(withIdentifier: cellID, owner: self) as? NSTableCellView else {return nil}
             
             cellView.textField?.stringValue = device.name ?? "unk"
-            cellView.textField?.textColor = (enabled ? .green : .red)
+            cellView.textField?.textColor = (enabled ? .systemGreen : .red)
+            cellView.textField?.font = (enabled ? NSFont.boldSystemFont(ofSize: 12.0) : nil)
+            //cellView.textField?.font = NSFont(name: "Helvetica", size: 12.0)
             
             return cellView
         }

@@ -41,7 +41,10 @@ class AudioState {
             myDevices.append(ad)
         }
         
-        return myDevices
+        let sortedDevices = myDevices.sorted{ $0.id < $1.id }
+        let sortByEnabled = sortedDevices.sorted{ $0.enabled != $1.enabled }
+        
+        return sortByEnabled
     }
     
     // MARK: - Public functions
