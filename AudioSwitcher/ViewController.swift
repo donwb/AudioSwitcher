@@ -22,6 +22,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var currentDeviceLabel: NSTextField!
     @IBOutlet weak var stickyCheckbox: NSButton!
+    @IBOutlet weak var changeCountLabel: NSTextField!
     
     @IBOutlet weak var lockDeviceCheckbox: NSButton!
     
@@ -63,8 +64,14 @@ class ViewController: NSViewController {
             
             self._manualChange = false
             
+            self.incrementCounter()
+            let counterVal = self.loadCounter()
+            self.changeCountLabel.stringValue = String(counterVal)
         }
 
+        // load counter
+        let counterTotal = loadCounter()
+        changeCountLabel.stringValue = String(counterTotal)
         
         
     }
@@ -111,31 +118,6 @@ class ViewController: NSViewController {
         tableView.reloadData()
     }
     
-    @IBAction func plistTestButton(_ sender: NSButton) {
-        
-        resetPlist(doNotOverwrite: false)
-        
-        
-    }
-    
-    @IBAction func incrementButton(_ sender: NSButton) {
-        
-        let docsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
-        let destPath = docsPath.appendingPathComponent("Stats.plist")
-        
-        let dict = NSDictionary(contentsOfFile: destPath)
-        
-        print(dict!["total"])
-        print(dict!["lastChange"])
-        
-        var plistDict: NSMutableDictionary = NSMutableDictionary(contentsOfFile: destPath)!
-        //plistDict.setValue("Value", forKey: "Key")
-        
-        plistDict["total"] = 20
-        plistDict.write(toFile: destPath, atomically: true)
-        
-    }
-    
     @IBAction func stickyCheckbox(_ sender: NSButton) {
         _preventChange = (stickyCheckbox.state == .on)
         
@@ -149,10 +131,47 @@ class ViewController: NSViewController {
         alert.runModal()
     }
     
+    func loadCounter() -> Int {
+        let res = getPlist()
+        let plistDict = res.plistDict
+        
+        guard let currentTotal = plistDict["total"] as? Int else {
+            return -1
+        }
+        return currentTotal
+        
+    }
+    
+    func getPlist() -> (plistDestPath: String, plistDict: NSMutableDictionary) {
+        let docsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        let destPath = docsPath.appendingPathComponent("Stats.plist")
+    
+        let plistDict: NSMutableDictionary = NSMutableDictionary(contentsOfFile: destPath)!
+        
+        return (destPath, plistDict)
+    }
+    
+    func incrementCounter() {
+        let res = getPlist()
+        let destPath = res.plistDestPath
+        let plistDict = res.plistDict
+        
+        
+        guard var currentTotal = plistDict["total"] as? Int else {
+            print("Couldn't get the total from the plist... stopping!")
+            return
+        }
+        
+        currentTotal += 1
+        plistDict["total"] = currentTotal
+        plistDict["lastChange"] = Date()
+        
+        plistDict.write(toFile: destPath, atomically: true)
+    }
+    
     func resetPlist(doNotOverwrite: Bool) {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let firstDocPath = paths[0]
-        //let filePath = firstDocPath.appendingPathComponent("Stats.plist")
         
         guard  let settingsFile = Bundle.main.url(forResource: "Stats", withExtension: ".plist")
         else {
