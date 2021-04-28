@@ -32,6 +32,8 @@ class ViewController: NSViewController {
 
         tableView.delegate = self
         tableView.dataSource = self
+        
+        resetPlist(doNotOverwrite: true)
 
         _audioState = AudioState.LoadAudioEnvironment()
         guard let device = _audioState?.ActiveOutputDevice else {return}
@@ -109,7 +111,31 @@ class ViewController: NSViewController {
         tableView.reloadData()
     }
     
-
+    @IBAction func plistTestButton(_ sender: NSButton) {
+        
+        resetPlist(doNotOverwrite: false)
+        
+        
+    }
+    
+    @IBAction func incrementButton(_ sender: NSButton) {
+        
+        let docsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+        let destPath = docsPath.appendingPathComponent("Stats.plist")
+        
+        let dict = NSDictionary(contentsOfFile: destPath)
+        
+        print(dict!["total"])
+        print(dict!["lastChange"])
+        
+        var plistDict: NSMutableDictionary = NSMutableDictionary(contentsOfFile: destPath)!
+        //plistDict.setValue("Value", forKey: "Key")
+        
+        plistDict["total"] = 20
+        plistDict.write(toFile: destPath, atomically: true)
+        
+    }
+    
     @IBAction func stickyCheckbox(_ sender: NSButton) {
         _preventChange = (stickyCheckbox.state == .on)
         
@@ -122,6 +148,45 @@ class ViewController: NSViewController {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
+    
+    func resetPlist(doNotOverwrite: Bool) {
+        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let firstDocPath = paths[0]
+        //let filePath = firstDocPath.appendingPathComponent("Stats.plist")
+        
+        guard  let settingsFile = Bundle.main.url(forResource: "Stats", withExtension: ".plist")
+        else {
+            print("Can't find source file")
+            return
+        }
+        let fileManager = FileManager.default
+        do {
+            let docsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as NSString
+            let destPath = docsPath.appendingPathComponent("Stats.plist")
+            let destPathURL = URL(fileURLWithPath: destPath)
+            
+            
+            if fileManager.fileExists(atPath: destPath) {
+                if doNotOverwrite {
+                    print("File  exists... Not forcing, leaving alone")
+                    return
+                } else {
+                    print("File exists, overwriting...")
+                    try fileManager.removeItem(atPath: destPath)
+                    try fileManager.copyItem(at: settingsFile, to: destPathURL)
+                }
+            } else {
+                print("File doesn't exist, copying new")
+                try fileManager.copyItem(at: settingsFile, to: destPathURL)
+            }
+            
+        } catch let error as NSError {
+            print("An error occured while trying to copy plist file: ", error)
+        }
+        
+        print(firstDocPath)
+    }
+   
 }
 
 extension ViewController: NSTableViewDataSource {

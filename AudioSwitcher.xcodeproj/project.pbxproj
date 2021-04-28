@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED46C3CB263855EB00366830 /* Stats.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED46C3CA263855EB00366830 /* Stats.plist */; };
 		ED5B95D6262F1B2300FF31CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95D5262F1B2300FF31CE /* AppDelegate.swift */; };
 		ED5B95D8262F1B2300FF31CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95D7262F1B2300FF31CE /* ViewController.swift */; };
 		ED5B95DA262F1B2400FF31CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED5B95D9262F1B2400FF31CE /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		ED46C3CA263855EB00366830 /* Stats.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Stats.plist; sourceTree = "<group>"; };
 		ED5B95D2262F1B2300FF31CE /* AudioSwitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioSwitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5B95D5262F1B2300FF31CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED5B95D7262F1B2300FF31CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -100,6 +102,8 @@
 		ED5B95D4262F1B2300FF31CE /* AudioSwitcher */ = {
 			isa = PBXGroup;
 			children = (
+				ED46C3CA263855EB00366830 /* Stats.plist */,
+				ED7EF58226385F44000B4715 /* Documents */,
 				ED5B95D5262F1B2300FF31CE /* AppDelegate.swift */,
 				ED5B95D7262F1B2300FF31CE /* ViewController.swift */,
 				ED5B960A26306C8300FF31CE /* AudioState.swift */,
@@ -127,6 +131,13 @@
 				ED5B95F5262F1B2400FF31CE /* Info.plist */,
 			);
 			path = AudioSwitcherUITests;
+			sourceTree = "<group>";
+		};
+		ED7EF58226385F44000B4715 /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Documents;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -240,6 +251,7 @@
 			files = (
 				ED5B95DA262F1B2400FF31CE /* Assets.xcassets in Resources */,
 				ED5B95DD262F1B2400FF31CE /* Main.storyboard in Resources */,
+				ED46C3CB263855EB00366830 /* Stats.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
