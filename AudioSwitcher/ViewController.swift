@@ -10,6 +10,7 @@ import SimplyCoreAudio
 
 class ViewController: NSViewController {
 
+// MARK: - private members
     
     //private var _sca: SimplyCoreAudio?
     //private var _currentDevices =  [AudioDevice]()
@@ -27,7 +28,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var lockDeviceCheckbox: NSButton!
     
 
-    
+// MARK: - overrides
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -98,6 +99,7 @@ class ViewController: NSViewController {
     }
 
 
+// MARK: - IBActions
     
     @IBAction func revertButton(_ sender: NSButton) {
         _manualChange = true
@@ -130,6 +132,8 @@ class ViewController: NSViewController {
         alert.addButton(withTitle: "OK")
         alert.runModal()
     }
+    
+// MARK: - plist functions
     
     func loadCounter() -> Int {
         let res = getPlist()
@@ -207,6 +211,8 @@ class ViewController: NSViewController {
     }
    
 }
+
+// MARK: - tableview extensions
 
 extension ViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
