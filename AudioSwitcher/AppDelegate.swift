@@ -12,6 +12,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     
 
+    // referencing this tutorial for pushing app to menubar
+    // https://www.appcoda.com/macos-status-bar-apps/
+    
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
