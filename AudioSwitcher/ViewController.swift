@@ -20,6 +20,8 @@ class ViewController: NSViewController {
     private var _manualChange = false
     private var _preventChange = true
     
+    
+    
     @IBOutlet weak var tableView: NSTableView!
     @IBOutlet weak var currentDeviceLabel: NSTextField!
     @IBOutlet weak var stickyCheckbox: NSButton!
@@ -79,6 +81,11 @@ class ViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
+        
+        view.window?.styleMask.remove(.resizable)
+        view.window?.styleMask.remove(.miniaturizable)
+        //view.window?.center()
+        
         tableView.reloadData()
     }
 
