@@ -12,26 +12,32 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     
     private var statusItem: NSStatusItem?
+    var statusView: StatusView?
+    var _mainWindowView: ViewController?
+    
+    var _lastDevice: String?
+    
     
     // referencing this tutorial for pushing app to menubar
     // https://www.appcoda.com/macos-status-bar-apps/
+    // https://betterprogramming.pub/swift-3-creating-a-custom-view-from-a-xib-ecdfe5b3a960
+    
     @IBOutlet weak var menu: NSMenu?
     @IBOutlet weak var firstMenuItem: NSMenuItem?
     
+    
+    
+    
     @IBAction func showPreferences(_ sender: Any) {
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
-        guard let vc = storyboard.instantiateController(withIdentifier: .init(stringLiteral: "preferencesID")) as? ViewController else
-            { return }
-        
-        let window = NSWindow(contentViewController: vc)
-        window.makeKeyAndOrderFront(nil)
-        
-        
+        showMainWindow()
+        _lastDevice = _mainWindowView?.getCurrentDeviceName()
         
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        showMainWindow()
+        
+        _lastDevice = _mainWindowView?.getCurrentDeviceName()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -51,8 +57,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if let menu = menu {
             statusItem?.menu = menu
+            
+            menu.delegate = self
         }
+        
+        if let item = firstMenuItem {
+            statusView = StatusView(frame: NSRect(x:0.0, y: 0.0, width: 250.0, height: 45.0))
+            
+            item.view = statusView
+            
+        }
+    }
+    
+    func showMainWindow() {
+        let storyboard = NSStoryboard(name: "Main", bundle: nil)
+        guard let mWV = storyboard.instantiateController(withIdentifier: .init(stringLiteral: "preferencesID")) as? ViewController else
+            { return }
+        _mainWindowView = mWV
+        
+        
+        let window = NSWindow(contentViewController: mWV)
+        window.makeKeyAndOrderFront(nil)
     }
 
 }
 
+extension AppDelegate: NSMenuDelegate {
+    func menuWillOpen(_ menu: NSMenu) {
+        if let lastDevice = _lastDevice {
+            statusView?.setLabel(labelName: lastDevice)
+        } else {
+            statusView?.setLabel(labelName: "Cannot get current device name")
+        }
+    }
+    
+    func menuDidClose(_ menu: NSMenu) {
+        statusView?.setLabel(labelName: "clear")
+    }
+}

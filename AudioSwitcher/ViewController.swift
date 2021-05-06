@@ -16,10 +16,10 @@ class ViewController: NSViewController {
     //private var _currentDevices =  [AudioDevice]()
     private var _selectedDevice: AudioDevice?
     private var _audioState: AudioState?
+    private var _currentDeviceName: String?
     
     private var _manualChange = false
     private var _preventChange = true
-    
     
     
     @IBOutlet weak var tableView: NSTableView!
@@ -43,6 +43,10 @@ class ViewController: NSViewController {
         guard let device = _audioState?.ActiveOutputDevice else {return}
         
         currentDeviceLabel.stringValue = device.name
+        
+        
+        _currentDeviceName = device.name
+        print("Current device name: \(_currentDeviceName)")
         
         var observer = NotificationCenter.default.addObserver(forName: .defaultOutputDeviceChanged,
                                                                object: nil,
@@ -131,6 +135,14 @@ class ViewController: NSViewController {
         _preventChange = (stickyCheckbox.state == .on)
         
         print("Prevent?: \(_preventChange)")
+    }
+    
+    func getCurrentDeviceName() -> String {
+        guard let device = _currentDeviceName else {
+            return "unable to find device name"
+        }
+        
+        return device
     }
     
     func showAlert(message: String) {
