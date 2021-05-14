@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         //statusItem?.button?.title = "Audio Switcher"
-        let itemImage = NSImage(named: "plug")
+        let itemImage = NSImage(named: "plugmenuicon")
         itemImage?.isTemplate = true
         statusItem?.button?.image = itemImage
         
