@@ -91,10 +91,13 @@ class ViewController: NSViewController {
         //view.window?.center()
         
         tableView.reloadData()
+        
+        NSApplication.shared.activate(ignoringOtherApps: true)
+        
     }
     
     override func viewWillDisappear() {
-        
+       
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
         appDelegate.showMenuItem?.isEnabled = true
         
