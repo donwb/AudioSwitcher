@@ -460,6 +460,7 @@
 				CODE_SIGN_ENTITLEMENTS = AudioSwitcher/AudioSwitcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 0514;
 				DEVELOPMENT_TEAM = YR2B55YA56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = AudioSwitcher/Info.plist;
@@ -467,6 +468,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.donwb.AudioSwitcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -481,6 +483,7 @@
 				CODE_SIGN_ENTITLEMENTS = AudioSwitcher/AudioSwitcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 0514;
 				DEVELOPMENT_TEAM = YR2B55YA56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = AudioSwitcher/Info.plist;
@@ -488,6 +491,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MARKETING_VERSION = 0.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.donwb.AudioSwitcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
