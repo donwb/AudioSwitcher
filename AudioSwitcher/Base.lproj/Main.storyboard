@@ -50,6 +50,7 @@
                     <connections>
                         <outlet property="firstMenuItem" destination="6Vd-XU-KVr" id="PVe-Y4-OiJ"/>
                         <outlet property="menu" destination="uQy-DD-JDr" id="atg-BG-UX4"/>
+                        <outlet property="showMenuItem" destination="BOF-NM-1cW" id="DwC-pJ-woE"/>
                     </connections>
                 </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>

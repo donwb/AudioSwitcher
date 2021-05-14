@@ -92,6 +92,13 @@ class ViewController: NSViewController {
         
         tableView.reloadData()
     }
+    
+    override func viewWillDisappear() {
+        
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        appDelegate.showMenuItem?.isEnabled = true
+        
+    }
 
     override var representedObject: Any? {
         didSet {

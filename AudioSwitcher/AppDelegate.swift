@@ -24,7 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBOutlet weak var menu: NSMenu?
     @IBOutlet weak var firstMenuItem: NSMenuItem?
-    
+    @IBOutlet weak var showMenuItem: NSMenuItem?
     
     
     
@@ -57,6 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         if let menu = menu {
             statusItem?.menu = menu
+            menu.autoenablesItems = false
             
             menu.delegate = self
         }
@@ -78,6 +79,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let window = NSWindow(contentViewController: mWV)
         window.makeKeyAndOrderFront(nil)
+        
+        showMenuItem?.isEnabled = false
     }
 
 }
