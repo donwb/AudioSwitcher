@@ -9,16 +9,17 @@
             <connections>
                 <outlet property="contentView" destination="c22-O7-iKe" id="Y0Z-S7-7TL"/>
                 <outlet property="statusTextLabel" destination="aSm-5A-FRn" id="Xzm-0u-l3i"/>
+                <outlet property="stickyTextLabel" destination="cfh-gp-peT" id="wtx-i6-3JH"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="260" height="56"/>
+            <rect key="frame" x="0.0" y="0.0" width="217" height="63"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aSm-5A-FRn">
-                    <rect key="frame" x="18" y="20" width="224" height="16"/>
+                    <rect key="frame" x="18" y="20" width="195" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="3gN-LF-YV1">
                         <font key="font" usesAppearanceFont="YES"/>
@@ -26,8 +27,26 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wBA-Wf-XVs">
+                    <rect key="frame" x="18" y="37" width="109" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Current Default:" id="snt-tN-a1q">
+                        <font key="font" metaFont="systemBold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cfh-gp-peT">
+                    <rect key="frame" x="160" y="37" width="53" height="16"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Sticky" id="z3d-cW-S88">
+                        <font key="font" metaFont="systemUltraLight" size="13"/>
+                        <color key="textColor" name="systemGrayColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
-            <point key="canvasLocation" x="29" y="56"/>
+            <point key="canvasLocation" x="7.5" y="59.5"/>
         </customView>
     </objects>
 </document>

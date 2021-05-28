@@ -16,6 +16,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var _mainWindowView: ViewController?
     
     var _lastDevice: String?
+    var _deviceIsSticky: Bool?
     
     
     // referencing this tutorial for pushing app to menubar
@@ -31,13 +32,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction func showPreferences(_ sender: Any) {
         showMainWindow()
         _lastDevice = _mainWindowView?.getCurrentDeviceName()
-        
+        _deviceIsSticky = _mainWindowView?.getStickyStatus()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         showMainWindow()
         
         _lastDevice = _mainWindowView?.getCurrentDeviceName()
+        _deviceIsSticky = _mainWindowView?.getStickyStatus()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -89,6 +91,9 @@ extension AppDelegate: NSMenuDelegate {
     func menuWillOpen(_ menu: NSMenu) {
         if let lastDevice = _lastDevice {
             statusView?.setLabel(labelName: lastDevice)
+            if let sticky = _deviceIsSticky {
+                statusView?.setSticky(isStickyOn: sticky)
+            }
         } else {
             statusView?.setLabel(labelName: "Cannot get current device name")
         }

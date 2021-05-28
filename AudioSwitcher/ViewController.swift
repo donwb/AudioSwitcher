@@ -38,6 +38,13 @@ class ViewController: NSViewController {
         tableView.dataSource = self
         
         resetPlist(doNotOverwrite: true)
+        
+// TODO: - Sticky Flag
+        
+        // Need to persist the sticky flag to plist, and recall from there when view loads
+        // right now it defaults to true, so it's always set
+        // this is because the UI used to always be loaded before it was a menubar app
+        // now that the view can be unloaded but it still catch the switch event it looks at the default which is in the storyboard
 
         _audioState = AudioState.LoadAudioEnvironment()
         guard let device = _audioState?.ActiveOutputDevice else {return}
@@ -153,6 +160,12 @@ class ViewController: NSViewController {
         }
         
         return device
+    }
+    
+    func getStickyStatus() -> Bool {
+        let s = _preventChange
+        print("StickyStatus: ", s)
+        return s
     }
     
     func showAlert(message: String) {
