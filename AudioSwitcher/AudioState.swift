@@ -13,7 +13,7 @@ class AudioState {
     // MARK: - private members
     
     private var _sca: SimplyCoreAudio?
-    private var _devices = [AudioDevice]()
+    private var _devices = [MyAudioDevice]()
     
     // MARK: - Initializers
     init() {
@@ -32,12 +32,12 @@ class AudioState {
     }
     
     // MARK: - Private functions
-    private func loadDevices() -> [AudioDevice] {
+    private func loadDevices() -> [MyAudioDevice] {
         //_devices.removeAll()
-        var myDevices = [AudioDevice]()
+        var myDevices = [MyAudioDevice]()
         let outputDevices = _sca?.allOutputDevices
         for d in outputDevices! {
-            let ad = AudioDevice(name: d.name, id: d.id, enabled: d.isDefaultOutputDevice)
+            let ad = MyAudioDevice(name: d.name, id: d.id, enabled: d.isDefaultOutputDevice)
             myDevices.append(ad)
         }
         
@@ -54,7 +54,7 @@ class AudioState {
         
     }
     
-    func MakeActiveOutputDevice(device: AudioDevice) {
+    func MakeActiveOutputDevice(device: MyAudioDevice) {
         guard let scaDevices = _sca?.allOutputDevices else {return}
         
         for d in scaDevices {
@@ -67,21 +67,81 @@ class AudioState {
         
     }
     
+    func ChangeDeviceVolue(selectedDevice: MyAudioDevice, volume: Float){
+        guard let scaDevices = _sca?.allOutputDevices else { return }
+
+        if let theDevice = findDevice(selectedDevice: selectedDevice) {
+            print("setting volume for \(theDevice.name)")
+            theDevice.setVolume(volume, channel: 0, scope: .output)
+        }
+        
+        
+//
+//        for device in scaDevices {
+//            if device.name == selectedDevice.name {
+//                print("setting volume for \(device.name)")
+//
+//                //device.setVolume(75, channel: 1 , scope: .output)
+//                //let retVal = device.setMute(true, channel: 2, scope: .output)
+//                //print("Return: \(retVal)")
+//
+//                let isMuted = device.isMuted(channel: 51, scope: .output)
+//                print("Is it muted: \(isMuted)")
+//
+//                print("\n")
+//                let vi = device.volumeInfo(channel: 0, scope: .output)
+//                print(vi)
+//                device.setVolume(0.8, channel: 0, scope: .output)
+//
+//
+//
+//            }
+//        }
+    }
+    
+    func GetVolumeLevel(selectedDevice: MyAudioDevice) -> Float? {
+        guard let scaDevices = _sca?.allOutputDevices else { return nil }
+        
+        if let theDevice = findDevice(selectedDevice: selectedDevice) {
+            let vi = theDevice.volumeInfo(channel: 0, scope: .output)
+            print(vi)
+            return vi?.volume
+        }
+        
+        return nil
+        
+    }
+    
+    func findDevice(selectedDevice: MyAudioDevice) -> AudioDevice? {
+        guard let scaDevices = _sca?.allOutputDevices else { return nil }
+        var foundDevice: AudioDevice?
+        foundDevice = nil
+        
+        for device in scaDevices {
+            if device.name == selectedDevice.name {
+                foundDevice = device
+                break
+            }
+        }
+        
+        return foundDevice
+    }
+    
     func RevertToSonos() {
-        let d = AudioDevice(name: "HIFI DSD", id: 77, enabled: false)
+        let d = MyAudioDevice(name: "HIFI DSD", id: 77, enabled: false)
         MakeActiveOutputDevice(device: d)
         
     }
     
-    var Devices: [AudioDevice] {
+    var Devices: [MyAudioDevice] {
         get {
             return _devices
         }
     }
     
-    var ActiveOutputDevice: AudioDevice? {
+    var ActiveOutputDevice: MyAudioDevice? {
         get{
-            var active: AudioDevice?
+            var active: MyAudioDevice?
             // gotta be a better way no doubt
             for d in _devices{
                 if d.enabled == true {
@@ -96,7 +156,7 @@ class AudioState {
 }
 
 // MARK: - Structs
-struct AudioDevice: Codable {
+struct MyAudioDevice: Codable {
     init(name: String, id: UInt32, enabled: Bool){
         self.name = name
         self.id = id

@@ -14,7 +14,7 @@ class ViewController: NSViewController {
     
     //private var _sca: SimplyCoreAudio?
     //private var _currentDevices =  [AudioDevice]()
-    private var _selectedDevice: AudioDevice?
+    private var _selectedDevice: MyAudioDevice?
     private var _audioState: AudioState?
     private var _currentDeviceName: String?
     
@@ -27,6 +27,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var stickyCheckbox: NSButton!
     @IBOutlet weak var changeCountLabel: NSTextField!
     
+    @IBOutlet weak var enableButton: NSButton!
     @IBOutlet weak var lockDeviceCheckbox: NSButton!
     
 
@@ -123,11 +124,30 @@ class ViewController: NSViewController {
     
         // hold on to selected device in case they hit the enabled button
         _selectedDevice = selectedDevice
+        
+        // enable the "enable" button now
+        self.enableButton.isEnabled = true
+        
         print("Setting: \(selectedDevice!)")
     }
 
 
 // MARK: - IBActions
+    
+    @IBAction func testChangeVolume(_ sender: Any) {
+        
+        // MARK: - TODO Add the volume slider ability
+        
+        // holy shit, figured it out, but now i need to replace the button with a slider
+        // and a call to GetVolumeLevel to set the slider
+        // the values are 0..1
+        
+        _audioState?.ChangeDeviceVolue(selectedDevice: _selectedDevice!, volume: 0.4)
+       
+        print("Done!")
+        
+    }
+    
     
     @IBAction func revertButton(_ sender: NSButton) {
         _manualChange = true
