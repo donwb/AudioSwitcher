@@ -99,13 +99,23 @@ class AudioState {
 //        }
     }
     
-    func GetVolumeLevel(selectedDevice: MyAudioDevice) -> Float? {
+    func GetVolumeLevel(selectedDevice: MyAudioDevice) -> Double? {
         guard let scaDevices = _sca?.allOutputDevices else { return nil }
         
         if let theDevice = findDevice(selectedDevice: selectedDevice) {
             let vi = theDevice.volumeInfo(channel: 0, scope: .output)
             print(vi)
-            return vi?.volume
+            
+            guard let vi = vi else {
+                fatalError("The volume info returned nil")
+            }
+            guard let theVolume = vi.volume else {
+                fatalError("unable to get the volume from volume info")
+            }
+            
+            let viDouble = Double(theVolume)
+            
+            return viDouble
         }
         
         return nil

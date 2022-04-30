@@ -27,6 +27,7 @@ class ViewController: NSViewController {
     @IBOutlet weak var stickyCheckbox: NSButton!
     @IBOutlet weak var changeCountLabel: NSTextField!
     
+    @IBOutlet weak var volumeSlider: NSSlider!
     @IBOutlet weak var enableButton: NSButton!
     @IBOutlet weak var lockDeviceCheckbox: NSButton!
     
@@ -148,6 +149,16 @@ class ViewController: NSViewController {
         
     }
     
+    @IBAction func testGetVolume(_ sender: Any) {
+        
+        let volumeLevel = _audioState?.GetVolumeLevel(selectedDevice: _selectedDevice!)
+        
+        print("Current volome: \(volumeLevel)")
+        
+     
+        self.volumeSlider.doubleValue =  volumeLevel!
+        
+    }
     
     @IBAction func revertButton(_ sender: NSButton) {
         _manualChange = true
