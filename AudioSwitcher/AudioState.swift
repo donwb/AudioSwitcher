@@ -7,6 +7,7 @@
 
 import Foundation
 import SimplyCoreAudio
+import CloudKit
 
 
 class AudioState {
@@ -55,7 +56,10 @@ class AudioState {
     }
     
     func MakeActiveOutputDevice(device: MyAudioDevice) {
-        guard let scaDevices = _sca?.allOutputDevices else {return}
+        guard let scaDevices = _sca?.allOutputDevices else {
+            fatalError("Can't obtain the list of audio devices from CoreAudio")
+            
+        }
         
         for d in scaDevices {
             if d.name == device.name {
@@ -67,47 +71,34 @@ class AudioState {
         
     }
     
-    func ChangeDeviceVolue(selectedDevice: MyAudioDevice, volume: Float){
-        guard let scaDevices = _sca?.allOutputDevices else { return }
+    func ChangeDeviceVolue(selectedDevice: MyAudioDevice, volume: Double){
+        guard let scaDevices = _sca?.allOutputDevices else {
+            fatalError("Can't obtain the list of audio devices from CoreAudio")
+            
+        }
 
+        let floatVolume = Float(volume)
+        
         if let theDevice = findDevice(selectedDevice: selectedDevice) {
             print("setting volume for \(theDevice.name)")
-            theDevice.setVolume(volume, channel: 0, scope: .output)
+            theDevice.setVolume(floatVolume, channel: 0, scope: .output)
         }
-        
-        
-//
-//        for device in scaDevices {
-//            if device.name == selectedDevice.name {
-//                print("setting volume for \(device.name)")
-//
-//                //device.setVolume(75, channel: 1 , scope: .output)
-//                //let retVal = device.setMute(true, channel: 2, scope: .output)
-//                //print("Return: \(retVal)")
-//
-//                let isMuted = device.isMuted(channel: 51, scope: .output)
-//                print("Is it muted: \(isMuted)")
-//
-//                print("\n")
-//                let vi = device.volumeInfo(channel: 0, scope: .output)
-//                print(vi)
-//                device.setVolume(0.8, channel: 0, scope: .output)
-//
-//
-//
-//            }
-//        }
     }
     
     func GetVolumeLevel(selectedDevice: MyAudioDevice) -> Double? {
-        guard let scaDevices = _sca?.allOutputDevices else { return nil }
+        guard let scaDevices = _sca?.allOutputDevices else {
+            fatalError("Can't obtain the list of audio devices from CoreAudio")
+            
+        }
         
         if let theDevice = findDevice(selectedDevice: selectedDevice) {
             let vi = theDevice.volumeInfo(channel: 0, scope: .output)
             print(vi)
             
             guard let vi = vi else {
-                fatalError("The volume info returned nil")
+                // fatalError("The volume info returned nil")
+                print("The volume info returned nil")
+                return nil
             }
             guard let theVolume = vi.volume else {
                 fatalError("unable to get the volume from volume info")
@@ -122,8 +113,22 @@ class AudioState {
         
     }
     
+    func IsDeviceMuted(selectedDevice: MyAudioDevice) -> Bool {
+        let theDevice = findDevice(selectedDevice: selectedDevice)
+        
+        let isMuted = theDevice!.isMuted(channel: 0, scope: .output)
+        print("Is it muted: \(isMuted)")
+        
+        return isMuted ?? false
+        
+    }
+    
     func findDevice(selectedDevice: MyAudioDevice) -> AudioDevice? {
-        guard let scaDevices = _sca?.allOutputDevices else { return nil }
+        guard let scaDevices = _sca?.allOutputDevices else {
+            fatalError("Can't obtain the list of audio devices from CoreAudio")
+            
+        }
+        
         var foundDevice: AudioDevice?
         foundDevice = nil
         

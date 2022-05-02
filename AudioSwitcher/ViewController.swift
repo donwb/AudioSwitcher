@@ -12,8 +12,6 @@ class ViewController: NSViewController {
 
 // MARK: - private members
     
-    //private var _sca: SimplyCoreAudio?
-    //private var _currentDevices =  [AudioDevice]()
     private var _selectedDevice: MyAudioDevice?
     private var _audioState: AudioState?
     private var _currentDeviceName: String?
@@ -126,6 +124,16 @@ class ViewController: NSViewController {
         // hold on to selected device in case they hit the enabled button
         _selectedDevice = selectedDevice
         
+        // get the current volume level for the selected device
+        // if the device doesn't support volume chance, the slider will disable
+        let volumeLevel = _audioState?.GetVolumeLevel(selectedDevice: _selectedDevice!)
+        if let volume = volumeLevel {
+            self.volumeSlider.isEnabled = true
+            self.volumeSlider.doubleValue = volume
+        } else {
+            self.volumeSlider.isEnabled = false
+        }
+        
         // enable the "enable" button now
         self.enableButton.isEnabled = true
         
@@ -135,28 +143,14 @@ class ViewController: NSViewController {
 
 // MARK: - IBActions
     
-    @IBAction func testChangeVolume(_ sender: Any) {
-        
-        // MARK: - TODO Add the volume slider ability
-        
-        // holy shit, figured it out, but now i need to replace the button with a slider
-        // and a call to GetVolumeLevel to set the slider
-        // the values are 0..1
-        
-        _audioState?.ChangeDeviceVolue(selectedDevice: _selectedDevice!, volume: 0.4)
-       
-        print("Done!")
-        
-    }
     
-    @IBAction func testGetVolume(_ sender: Any) {
+    @IBAction func sliderValueChange(_ sender: NSSlider) {
+        print("slider value change")
+        print(sender.doubleValue as Any)
         
-        let volumeLevel = _audioState?.GetVolumeLevel(selectedDevice: _selectedDevice!)
+        let newVolume = sender.doubleValue
         
-        print("Current volome: \(volumeLevel)")
-        
-     
-        self.volumeSlider.doubleValue =  volumeLevel!
+        _audioState?.ChangeDeviceVolue(selectedDevice: _selectedDevice!, volume: newVolume)
         
     }
     
