@@ -12,9 +12,9 @@
                 <application id="hnw-xV-0zn" sceneMemberID="viewController">
                     <menu key="mainMenu" title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
                         <items>
-                            <menuItem title="AudioSwitcher" id="1Xt-HY-uBw">
+                            <menuItem title="AudioSticker" id="1Xt-HY-uBw">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="AudioSwitcher" systemMenu="apple" id="uQy-DD-JDr">
+                                <menu key="submenu" title="AudioSticker" systemMenu="apple" id="uQy-DD-JDr">
                                     <items>
                                         <menuItem title="Item" id="6Vd-XU-KVr">
                                             <modifierMask key="keyEquivalentModifierMask"/>
@@ -47,7 +47,7 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="AudioSwitcher" customModuleProvider="target">
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="AudioSticker" customModuleProvider="target">
                     <connections>
                         <outlet property="firstMenuItem" destination="6Vd-XU-KVr" id="PVe-Y4-OiJ"/>
                         <outlet property="menu" destination="uQy-DD-JDr" id="atg-BG-UX4"/>
@@ -59,10 +59,10 @@
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>
-        <!--Audio Switcher-->
+        <!--Audio Sticker-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController title="Audio Switcher" storyboardIdentifier="preferencesID" id="XfG-lQ-9wD" customClass="ViewController" customModule="AudioSwitcher" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Audio Sticker" storyboardIdentifier="preferencesID" id="XfG-lQ-9wD" customClass="ViewController" customModule="AudioSticker" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="261"/>
                         <autoresizingMask key="autoresizingMask"/>

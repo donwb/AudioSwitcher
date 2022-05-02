@@ -40,17 +40,17 @@
 
 /* Begin PBXFileReference section */
 		ED46C3CA263855EB00366830 /* Stats.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Stats.plist; sourceTree = "<group>"; };
-		ED5B95D2262F1B2300FF31CE /* AudioSwitcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioSwitcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED5B95D2262F1B2300FF31CE /* AudioSticker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioSticker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5B95D5262F1B2300FF31CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ED5B95D7262F1B2300FF31CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ED5B95D9262F1B2400FF31CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ED5B95DC262F1B2400FF31CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED5B95DE262F1B2400FF31CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED5B95DF262F1B2400FF31CE /* AudioSwitcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AudioSwitcher.entitlements; sourceTree = "<group>"; };
-		ED5B95E4262F1B2400FF31CE /* AudioSwitcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioSwitcherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED5B95E4262F1B2400FF31CE /* AudioStickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioStickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5B95E8262F1B2400FF31CE /* AudioSwitcherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSwitcherTests.swift; sourceTree = "<group>"; };
 		ED5B95EA262F1B2400FF31CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		ED5B95EF262F1B2400FF31CE /* AudioSwitcherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioSwitcherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED5B95EF262F1B2400FF31CE /* AudioStickerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioStickerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5B95F3262F1B2400FF31CE /* AudioSwitcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSwitcherUITests.swift; sourceTree = "<group>"; };
 		ED5B95F5262F1B2400FF31CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED5B960A26306C8300FF31CE /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
@@ -98,9 +98,9 @@
 		ED5B95D3262F1B2300FF31CE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ED5B95D2262F1B2300FF31CE /* AudioSwitcher.app */,
-				ED5B95E4262F1B2400FF31CE /* AudioSwitcherTests.xctest */,
-				ED5B95EF262F1B2400FF31CE /* AudioSwitcherUITests.xctest */,
+				ED5B95D2262F1B2300FF31CE /* AudioSticker.app */,
+				ED5B95E4262F1B2400FF31CE /* AudioStickerTests.xctest */,
+				ED5B95EF262F1B2400FF31CE /* AudioStickerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -152,9 +152,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		ED5B95D1262F1B2300FF31CE /* AudioSwitcher */ = {
+		ED5B95D1262F1B2300FF31CE /* AudioSticker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ED5B95F8262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioSwitcher" */;
+			buildConfigurationList = ED5B95F8262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioSticker" */;
 			buildPhases = (
 				ED5B95CE262F1B2300FF31CE /* Sources */,
 				ED5B95CF262F1B2300FF31CE /* Frameworks */,
@@ -164,17 +164,17 @@
 			);
 			dependencies = (
 			);
-			name = AudioSwitcher;
+			name = AudioSticker;
 			packageProductDependencies = (
 				ED90A18227EBB07F00A71242 /* SimplyCoreAudio */,
 			);
 			productName = AudioSwitcher;
-			productReference = ED5B95D2262F1B2300FF31CE /* AudioSwitcher.app */;
+			productReference = ED5B95D2262F1B2300FF31CE /* AudioSticker.app */;
 			productType = "com.apple.product-type.application";
 		};
-		ED5B95E3262F1B2400FF31CE /* AudioSwitcherTests */ = {
+		ED5B95E3262F1B2400FF31CE /* AudioStickerTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ED5B95FB262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioSwitcherTests" */;
+			buildConfigurationList = ED5B95FB262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioStickerTests" */;
 			buildPhases = (
 				ED5B95E0262F1B2400FF31CE /* Sources */,
 				ED5B95E1262F1B2400FF31CE /* Frameworks */,
@@ -185,14 +185,14 @@
 			dependencies = (
 				ED5B95E6262F1B2400FF31CE /* PBXTargetDependency */,
 			);
-			name = AudioSwitcherTests;
+			name = AudioStickerTests;
 			productName = AudioSwitcherTests;
-			productReference = ED5B95E4262F1B2400FF31CE /* AudioSwitcherTests.xctest */;
+			productReference = ED5B95E4262F1B2400FF31CE /* AudioStickerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		ED5B95EE262F1B2400FF31CE /* AudioSwitcherUITests */ = {
+		ED5B95EE262F1B2400FF31CE /* AudioStickerUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = ED5B95FE262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioSwitcherUITests" */;
+			buildConfigurationList = ED5B95FE262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioStickerUITests" */;
 			buildPhases = (
 				ED5B95EB262F1B2400FF31CE /* Sources */,
 				ED5B95EC262F1B2400FF31CE /* Frameworks */,
@@ -203,9 +203,9 @@
 			dependencies = (
 				ED5B95F1262F1B2400FF31CE /* PBXTargetDependency */,
 			);
-			name = AudioSwitcherUITests;
+			name = AudioStickerUITests;
 			productName = AudioSwitcherUITests;
-			productReference = ED5B95EF262F1B2400FF31CE /* AudioSwitcherUITests.xctest */;
+			productReference = ED5B95EF262F1B2400FF31CE /* AudioStickerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -230,7 +230,7 @@
 					};
 				};
 			};
-			buildConfigurationList = ED5B95CD262F1B2300FF31CE /* Build configuration list for PBXProject "AudioSwitcher" */;
+			buildConfigurationList = ED5B95CD262F1B2300FF31CE /* Build configuration list for PBXProject "AudioSticker" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -246,9 +246,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				ED5B95D1262F1B2300FF31CE /* AudioSwitcher */,
-				ED5B95E3262F1B2400FF31CE /* AudioSwitcherTests */,
-				ED5B95EE262F1B2400FF31CE /* AudioSwitcherUITests */,
+				ED5B95D1262F1B2300FF31CE /* AudioSticker */,
+				ED5B95E3262F1B2400FF31CE /* AudioStickerTests */,
+				ED5B95EE262F1B2400FF31CE /* AudioStickerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -315,12 +315,12 @@
 /* Begin PBXTargetDependency section */
 		ED5B95E6262F1B2400FF31CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = ED5B95D1262F1B2300FF31CE /* AudioSwitcher */;
+			target = ED5B95D1262F1B2300FF31CE /* AudioSticker */;
 			targetProxy = ED5B95E5262F1B2400FF31CE /* PBXContainerItemProxy */;
 		};
 		ED5B95F1262F1B2400FF31CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = ED5B95D1262F1B2300FF31CE /* AudioSwitcher */;
+			target = ED5B95D1262F1B2300FF31CE /* AudioSticker */;
 			targetProxy = ED5B95F0262F1B2400FF31CE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -460,7 +460,7 @@
 				CODE_SIGN_ENTITLEMENTS = AudioSwitcher/AudioSwitcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0514;
+				CURRENT_PROJECT_VERSION = 0502;
 				DEVELOPMENT_TEAM = YR2B55YA56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = AudioSwitcher/Info.plist;
@@ -468,8 +468,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.95;
-				PRODUCT_BUNDLE_IDENTIFIER = com.donwb.AudioSwitcher;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.donwb.AudioSticker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -483,7 +483,7 @@
 				CODE_SIGN_ENTITLEMENTS = AudioSwitcher/AudioSwitcher.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 0514;
+				CURRENT_PROJECT_VERSION = 0502;
 				DEVELOPMENT_TEAM = YR2B55YA56;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = AudioSwitcher/Info.plist;
@@ -491,8 +491,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 0.95;
-				PRODUCT_BUNDLE_IDENTIFIER = com.donwb.AudioSwitcher;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.donwb.AudioSticker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -585,7 +585,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		ED5B95CD262F1B2300FF31CE /* Build configuration list for PBXProject "AudioSwitcher" */ = {
+		ED5B95CD262F1B2300FF31CE /* Build configuration list for PBXProject "AudioSticker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ED5B95F6262F1B2400FF31CE /* Debug */,
@@ -594,7 +594,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ED5B95F8262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioSwitcher" */ = {
+		ED5B95F8262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioSticker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ED5B95F9262F1B2400FF31CE /* Debug */,
@@ -603,7 +603,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ED5B95FB262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioSwitcherTests" */ = {
+		ED5B95FB262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioStickerTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ED5B95FC262F1B2400FF31CE /* Debug */,
@@ -612,7 +612,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		ED5B95FE262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioSwitcherUITests" */ = {
+		ED5B95FE262F1B2400FF31CE /* Build configuration list for PBXNativeTarget "AudioStickerUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				ED5B95FF262F1B2400FF31CE /* Debug */,
