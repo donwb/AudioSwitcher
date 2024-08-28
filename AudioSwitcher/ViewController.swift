@@ -126,6 +126,9 @@ class ViewController: NSViewController {
         
         // get the current volume level for the selected device
         // if the device doesn't support volume chance, the slider will disable
+        
+        // for some reason for bt devices the volume isn't available,
+        // so the slider will be greyed out and we can't control volume levels for those devices
         let volumeLevel = _audioState?.GetVolumeLevel(selectedDevice: _selectedDevice!)
         if let volume = volumeLevel {
             self.volumeSlider.isEnabled = true

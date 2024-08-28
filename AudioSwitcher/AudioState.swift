@@ -100,8 +100,11 @@ class AudioState {
                 print("The volume info returned nil")
                 return nil
             }
+            
             guard let theVolume = vi.volume else {
-                fatalError("unable to get the volume from volume info")
+                //fatalError("unable to get the volume from volume info")
+                print("unable to get the volume info from VolumeInfo")
+                return nil
             }
             
             let viDouble = Double(theVolume)
