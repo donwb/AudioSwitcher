@@ -16,7 +16,6 @@ class ViewController: NSViewController {
     private var _audioState: AudioState?
     private var _currentDeviceName: String?
     
-    private var _manualChange = false
     private var _preventChange = true
     
     
@@ -47,6 +46,7 @@ class ViewController: NSViewController {
         // now that the view can be unloaded but it still catch the switch event it looks at the default which is in the storyboard
 
         _audioState = AudioState.LoadAudioEnvironment()
+        _audioState?.SetSticky(_preventChange)
         guard let device = _audioState?.ActiveOutputDevice else {return}
         
         currentDeviceLabel.stringValue = device.name
@@ -61,22 +61,18 @@ class ViewController: NSViewController {
             
             
             print("A change happened")
-            
-            if !self._manualChange {
-                print("Do auto change shit")
-                if self._preventChange {
-                   // flip back to the previous default
-                    self._audioState?.RevertToSonos()
-                }
-                
+
+            // Sticky: AudioCore restores the chosen device (no-op for app-made changes)
+            // and reloads the device list.
+            self._audioState?.HandleDefaultOutputChanged()
+            if let active = self._audioState?.ActiveOutputDevice {
+                self.currentDeviceLabel.stringValue = active.name
             }
-            
+
             // the list refresh doesn't seem to pick up new devices...
             // but does work when a change occurs in the Sound Settings
             self._audioState?.reload()
             self.tableView.reloadData()
-            
-            self._manualChange = false
             
             self.incrementCounter()
             let counterVal = self.loadCounter()
@@ -158,8 +154,6 @@ class ViewController: NSViewController {
     }
     
     @IBAction func revertButton(_ sender: NSButton) {
-        _manualChange = true
-        
         guard let selectedDevice = _selectedDevice else {return }
         _audioState?.MakeActiveOutputDevice(device: selectedDevice)
         
@@ -178,6 +172,7 @@ class ViewController: NSViewController {
     
     @IBAction func stickyCheckbox(_ sender: NSButton) {
         _preventChange = (stickyCheckbox.state == .on)
+        _audioState?.SetSticky(_preventChange)
         
         print("Prevent?: \(_preventChange)")
     }
