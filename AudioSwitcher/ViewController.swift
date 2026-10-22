@@ -16,6 +16,7 @@ class ViewController: NSViewController {
     private var _audioState: AudioState?
     private var _currentDeviceName: String?
     
+    private let _stickyPreference = StickyPreference()
     private var _preventChange = true
     
     
@@ -44,6 +45,10 @@ class ViewController: NSViewController {
         // right now it defaults to true, so it's always set
         // this is because the UI used to always be loaded before it was a menubar app
         // now that the view can be unloaded but it still catch the switch event it looks at the default which is in the storyboard
+
+        // Restore the saved Sticky state so the checkbox matches how the app was closed.
+        _preventChange = _stickyPreference.isOn
+        stickyCheckbox.state = _preventChange ? .on : .off
 
         _audioState = AudioState.LoadAudioEnvironment()
         _audioState?.SetSticky(_preventChange)
@@ -172,6 +177,7 @@ class ViewController: NSViewController {
     
     @IBAction func stickyCheckbox(_ sender: NSButton) {
         _preventChange = (stickyCheckbox.state == .on)
+        _stickyPreference.isOn = _preventChange
         _audioState?.SetSticky(_preventChange)
         
         print("Prevent?: \(_preventChange)")
