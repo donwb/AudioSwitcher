@@ -51,10 +51,9 @@ class ViewController: NSViewController {
         stickyCheckbox.state = _preventChange ? .on : .off
 
         _audioState = AudioState.LoadAudioEnvironment()
-        // Re-select the device that was chosen when the app was last closed,
-        // before SetSticky records the current default as the chosen one.
-        _audioState?.RestoreChosenDevice()
-        _audioState?.SetSticky(_preventChange)
+        // Sticky on: re-select the device chosen when the app was last closed.
+        // Sticky off: leave the system output alone; the row is only highlighted.
+        _audioState?.ApplyLaunchState(sticky: _preventChange)
         guard let device = _audioState?.ActiveOutputDevice else {return}
         
         currentDeviceLabel.stringValue = device.name

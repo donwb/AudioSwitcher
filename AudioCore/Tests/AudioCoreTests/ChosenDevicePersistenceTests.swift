@@ -29,4 +29,27 @@ final class ChosenDevicePersistenceTests: XCTestCase {
         XCTAssertFalse(s.RestoreChosenDevice())
         XCTAssertEqual(s.ActiveOutputDevice?.name, "Speakers")
     }
+
+    func testStickyOffDoesNotSwitchButRemembersChoice() {
+        let defaults = UserDefaults(suiteName: "chosen-\(UUID())")!
+        let pref = ChosenDevicePreference(defaults: defaults)
+        pref.deviceName = "Headphones"
+
+        let s = AudioState.LoadAudioEnvironment(provider: makeProvider(), chosenPreference: pref)
+        s.ApplyLaunchState(sticky: false)
+        XCTAssertEqual(s.ActiveOutputDevice?.name, "Speakers")
+        XCTAssertEqual(s.ChosenDeviceName, "Headphones")
+        XCTAssertEqual(pref.deviceName, "Headphones")
+    }
+
+    func testStickyOnRestoresOnLaunch() {
+        let defaults = UserDefaults(suiteName: "chosen-\(UUID())")!
+        let pref = ChosenDevicePreference(defaults: defaults)
+        pref.deviceName = "Headphones"
+
+        let s = AudioState.LoadAudioEnvironment(provider: makeProvider(), chosenPreference: pref)
+        s.ApplyLaunchState(sticky: true)
+        XCTAssertEqual(s.ActiveOutputDevice?.name, "Headphones")
+        XCTAssertEqual(pref.deviceName, "Headphones")
+    }
 }

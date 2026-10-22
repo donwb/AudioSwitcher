@@ -94,6 +94,15 @@ public class AudioState {
         return true
     }
 
+    /// Launch-time setup. With Sticky on, the persisted chosen device is made
+    /// the default output first (SetSticky would otherwise record whatever the
+    /// system happens to be using). With Sticky off, nothing is switched; the
+    /// chosen device is only remembered so the UI can highlight it.
+    public func ApplyLaunchState(sticky: Bool) {
+        if sticky { RestoreChosenDevice() }
+        SetSticky(sticky)
+    }
+
     // MARK: Sticky
 
     /// When on, a system default change away from the chosen device is undone.
