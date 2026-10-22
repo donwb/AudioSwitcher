@@ -7,7 +7,6 @@
 
 import Cocoa
 import AudioCore
-import SimplyCoreAudio
 
 class ViewController: NSViewController {
 
