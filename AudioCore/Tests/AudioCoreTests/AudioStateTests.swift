@@ -103,10 +103,47 @@ final class AudioStateTests: XCTestCase {
         XCTAssertEqual(state.ActiveOutputDevice?.name, "Speakers")
     }
 
-    func testRevertToSonosActivatesHifiDevice() {
-        state.RevertToSonos()
-        XCTAssertTrue(hifi.isDefaultOutputDevice)
-        XCTAssertEqual(state.ActiveOutputDevice?.name, "HIFI DSD")
+    // Sticky (fake provider only; never touches real devices)
+    func testStickyRevertsToChosenDevice() {
+        state.SetSticky(true)               // chosen = Speakers
+        headphones.isDefaultOutputDevice = true   // external change
+        XCTAssertTrue(state.HandleDefaultOutputChanged())
+        XCTAssertTrue(speakers.isDefaultOutputDevice)
+        XCTAssertEqual(state.ActiveOutputDevice?.name, "Speakers")
+    }
+
+    func testStickyOffDoesNotRevert() {
+        state.SetSticky(true)
+        state.SetSticky(false)
+        headphones.isDefaultOutputDevice = true
+        XCTAssertFalse(state.HandleDefaultOutputChanged())
+        XCTAssertEqual(state.ActiveOutputDevice?.name, "Headphones")
+    }
+
+    func testStickyDoesNothingWhenChosenDeviceMissing() {
+        state.SetSticky(true)
+        provider.devices.removeAll { $0 === speakers }
+        headphones.isDefaultOutputDevice = true
+        XCTAssertFalse(state.HandleDefaultOutputChanged())
+        XCTAssertEqual(state.ActiveOutputDevice?.name, "Headphones")
+    }
+
+    func testStickyDoesNotRevertChangeMadeFromApp() throws {
+        state.SetSticky(true)
+        state.MakeActiveOutputDevice(device: try device("Headphones"))
+        XCTAssertFalse(state.HandleDefaultOutputChanged())
+        XCTAssertTrue(headphones.isDefaultOutputDevice)
+        XCTAssertEqual(state.ChosenDeviceName, "Headphones")
+        // later external change reverts to the app-chosen device
+        hifi.isDefaultOutputDevice = true
+        XCTAssertTrue(state.HandleDefaultOutputChanged())
+        XCTAssertTrue(headphones.isDefaultOutputDevice)
+    }
+
+    func testTurningStickyOnCapturesCurrentDefault() {
+        headphones.isDefaultOutputDevice = true   // changed outside app, before Sticky
+        state.SetSticky(true)
+        XCTAssertEqual(state.ChosenDeviceName, "Headphones")
     }
 
     // Volume
