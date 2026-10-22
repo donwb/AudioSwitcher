@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		ED90A19327EBB07F00A71299 /* AudioCore in Frameworks */ = {isa = PBXBuildFile; productRef = ED90A19227EBB07F00A71299 /* AudioCore */; };
 		ED46C3CB263855EB00366830 /* Stats.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED46C3CA263855EB00366830 /* Stats.plist */; };
 		ED5B95D6262F1B2300FF31CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95D5262F1B2300FF31CE /* AppDelegate.swift */; };
 		ED5B95D8262F1B2300FF31CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95D7262F1B2300FF31CE /* ViewController.swift */; };
@@ -65,6 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED90A18327EBB07F00A71242 /* SimplyCoreAudio in Frameworks */,
+				ED90A19327EBB07F00A71299 /* AudioCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,6 +169,7 @@
 			name = AudioSticker;
 			packageProductDependencies = (
 				ED90A18227EBB07F00A71242 /* SimplyCoreAudio */,
+				ED90A19227EBB07F00A71299 /* AudioCore */,
 			);
 			productName = AudioSwitcher;
 			productReference = ED5B95D2262F1B2300FF31CE /* AudioSticker.app */;
@@ -241,6 +244,7 @@
 			mainGroup = ED5B95C9262F1B2300FF31CE;
 			packageReferences = (
 				ED90A18127EBB07F00A71242 /* XCRemoteSwiftPackageReference "SimplyCoreAudio" */,
+				ED90A19127EBB07F00A71299 /* XCLocalSwiftPackageReference "AudioCore" */,
 			);
 			productRefGroup = ED5B95D3262F1B2300FF31CE /* Products */;
 			projectDirPath = "";
@@ -516,7 +520,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.donwb.AudioSwitcherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioSwitcher.app/Contents/MacOS/AudioSwitcher";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioSticker.app/Contents/MacOS/AudioSticker";
 			};
 			name = Debug;
 		};
@@ -538,7 +542,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.donwb.AudioSwitcherTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioSwitcher.app/Contents/MacOS/AudioSwitcher";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioSticker.app/Contents/MacOS/AudioSticker";
 			};
 			name = Release;
 		};
@@ -623,6 +627,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		ED90A19127EBB07F00A71299 /* XCLocalSwiftPackageReference "AudioCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = AudioCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		ED90A18127EBB07F00A71242 /* XCRemoteSwiftPackageReference "SimplyCoreAudio" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -639,6 +650,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = ED90A18127EBB07F00A71242 /* XCRemoteSwiftPackageReference "SimplyCoreAudio" */;
 			productName = SimplyCoreAudio;
+		};
+		ED90A19227EBB07F00A71299 /* AudioCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AudioCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
