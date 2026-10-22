@@ -37,14 +37,20 @@ public class AudioState {
     private let _provider: AudioDeviceProvider
     private var _devices = [MyAudioDevice]()
     private var _isSticky = false
-    private var _chosenDeviceName: String?
+    private var _chosenDeviceName: String? {
+        didSet { _chosenPreference?.deviceName = _chosenDeviceName }
+    }
+    private let _chosenPreference: ChosenDevicePreference?
 
-    public init(provider: AudioDeviceProvider) {
+    public init(provider: AudioDeviceProvider, chosenPreference: ChosenDevicePreference? = nil) {
         _provider = provider
+        _chosenPreference = chosenPreference
+        _chosenDeviceName = chosenPreference?.deviceName
     }
 
-    public static func LoadAudioEnvironment(provider: AudioDeviceProvider) -> AudioState {
-        let state = AudioState(provider: provider)
+    public static func LoadAudioEnvironment(provider: AudioDeviceProvider,
+                                            chosenPreference: ChosenDevicePreference? = nil) -> AudioState {
+        let state = AudioState(provider: provider, chosenPreference: chosenPreference)
         state.reload()
         return state
     }
@@ -73,6 +79,19 @@ public class AudioState {
         // A device the user picks in the app becomes the one Sticky protects.
         if found { _chosenDeviceName = device.name }
         reload()
+    }
+
+    /// Re-selects the persisted last-chosen device as the default output, if it
+    /// is currently present. Returns true if it was applied.
+    @discardableResult
+    public func RestoreChosenDevice() -> Bool {
+        reload()
+        guard let chosen = _chosenDeviceName,
+              _provider.outputDevices.contains(where: { $0.name == chosen }) else { return false }
+        if ActiveOutputDevice?.name != chosen {
+            MakeActiveOutputDevice(device: MyAudioDevice(name: chosen, id: 0, enabled: false))
+        }
+        return true
     }
 
     // MARK: Sticky

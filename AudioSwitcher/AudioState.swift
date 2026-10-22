@@ -12,6 +12,7 @@ extension AudioState {
     static func LoadAudioEnvironment() -> AudioState {
         // Keeps `.defaultOutputDeviceChanged` notifications flowing to the UI.
         DefaultOutputDeviceMonitor.shared.start()
-        return LoadAudioEnvironment(provider: NativeAudioProvider())
+        return LoadAudioEnvironment(provider: NativeAudioProvider(),
+                                    chosenPreference: ChosenDevicePreference())
     }
 }

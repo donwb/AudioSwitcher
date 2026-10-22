@@ -51,6 +51,9 @@ class ViewController: NSViewController {
         stickyCheckbox.state = _preventChange ? .on : .off
 
         _audioState = AudioState.LoadAudioEnvironment()
+        // Re-select the device that was chosen when the app was last closed,
+        // before SetSticky records the current default as the chosen one.
+        _audioState?.RestoreChosenDevice()
         _audioState?.SetSticky(_preventChange)
         guard let device = _audioState?.ActiveOutputDevice else {return}
         
@@ -99,9 +102,16 @@ class ViewController: NSViewController {
         //view.window?.center()
         
         tableView.reloadData()
+        selectChosenDeviceRow()
         
         NSApplication.shared.activate(ignoringOtherApps: true)
         
+    }
+    
+    private func selectChosenDeviceRow() {
+        guard let name = _audioState?.ChosenDeviceName ?? _audioState?.ActiveOutputDevice?.name,
+              let row = _audioState?.Devices.firstIndex(where: { $0.name == name }) else { return }
+        tableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
     }
     
     override func viewWillDisappear() {
