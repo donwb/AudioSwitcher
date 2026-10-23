@@ -6,6 +6,8 @@ import Foundation
 public protocol AudioOutputDevice: AnyObject {
     var name: String { get }
     var id: UInt32 { get }
+    /// How the device is connected. Read-only.
+    var transportType: AudioTransportType { get }
     var isDefaultOutputDevice: Bool { get set }
     func setOutputVolume(_ volume: Float)
     func outputVolume() -> Float?

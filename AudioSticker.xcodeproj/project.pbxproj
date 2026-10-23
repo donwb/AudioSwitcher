@@ -9,16 +9,11 @@
 /* Begin PBXBuildFile section */
 		ED90A19327EBB07F00A71299 /* AudioCore in Frameworks */ = {isa = PBXBuildFile; productRef = ED90A19227EBB07F00A71299 /* AudioCore */; };
 		ED46C3CB263855EB00366830 /* Stats.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED46C3CA263855EB00366830 /* Stats.plist */; };
-		ED5B95D6262F1B2300FF31CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95D5262F1B2300FF31CE /* AppDelegate.swift */; };
-		ED5B95D8262F1B2300FF31CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95D7262F1B2300FF31CE /* ViewController.swift */; };
 		ED5B95DA262F1B2400FF31CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED5B95D9262F1B2400FF31CE /* Assets.xcassets */; };
-		ED5B95DD262F1B2400FF31CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED5B95DB262F1B2400FF31CE /* Main.storyboard */; };
 		ED5B95E9262F1B2400FF31CE /* AudioSwitcherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95E8262F1B2400FF31CE /* AudioSwitcherTests.swift */; };
 		ED5B95F4262F1B2400FF31CE /* AudioSwitcherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B95F3262F1B2400FF31CE /* AudioSwitcherUITests.swift */; };
-		ED5B960B26306C8300FF31CE /* AudioState.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B960A26306C8300FF31CE /* AudioState.swift */; };
-		EDEF72C02644749C00635C47 /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = EDEF72BF2644749C00635C47 /* StatusView.xib */; };
-		EDEF72C22644760700635C47 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF72C12644760700635C47 /* StatusView.swift */; };
-		EDEF72C4264476F700635C47 /* LoadableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDEF72C3264476F700635C47 /* LoadableView.swift */; };
+		ED5B96A0262F1B2300FF3B01 /* AudioSwitcherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B96A0262F1B2300FF3A01 /* AudioSwitcherApp.swift */; };
+		ED5B96A0262F1B2300FF3B02 /* AudioMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED5B96A0262F1B2300FF3A02 /* AudioMenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,10 +36,7 @@
 /* Begin PBXFileReference section */
 		ED46C3CA263855EB00366830 /* Stats.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Stats.plist; sourceTree = "<group>"; };
 		ED5B95D2262F1B2300FF31CE /* AudioSticker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioSticker.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ED5B95D5262F1B2300FF31CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ED5B95D7262F1B2300FF31CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ED5B95D9262F1B2400FF31CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		ED5B95DC262F1B2400FF31CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ED5B95DE262F1B2400FF31CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED5B95DF262F1B2400FF31CE /* AudioSwitcher.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AudioSwitcher.entitlements; sourceTree = "<group>"; };
 		ED5B95E4262F1B2400FF31CE /* AudioStickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioStickerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,10 +45,8 @@
 		ED5B95EF262F1B2400FF31CE /* AudioStickerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioStickerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED5B95F3262F1B2400FF31CE /* AudioSwitcherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSwitcherUITests.swift; sourceTree = "<group>"; };
 		ED5B95F5262F1B2400FF31CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		ED5B960A26306C8300FF31CE /* AudioState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioState.swift; sourceTree = "<group>"; };
-		EDEF72BF2644749C00635C47 /* StatusView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusView.xib; sourceTree = "<group>"; };
-		EDEF72C12644760700635C47 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
-		EDEF72C3264476F700635C47 /* LoadableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadableView.swift; sourceTree = "<group>"; };
+		ED5B96A0262F1B2300FF3A01 /* AudioSwitcherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSwitcherApp.swift; sourceTree = "<group>"; };
+		ED5B96A0262F1B2300FF3A02 /* AudioMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,16 +98,11 @@
 		ED5B95D4262F1B2300FF31CE /* AudioSwitcher */ = {
 			isa = PBXGroup;
 			children = (
-				EDEF72C3264476F700635C47 /* LoadableView.swift */,
-				EDEF72BF2644749C00635C47 /* StatusView.xib */,
-				EDEF72C12644760700635C47 /* StatusView.swift */,
+				ED5B96A0262F1B2300FF3A01 /* AudioSwitcherApp.swift */,
+				ED5B96A0262F1B2300FF3A02 /* AudioMenuView.swift */,
 				ED46C3CA263855EB00366830 /* Stats.plist */,
 				ED7EF58226385F44000B4715 /* Documents */,
-				ED5B95D5262F1B2300FF31CE /* AppDelegate.swift */,
-				ED5B95D7262F1B2300FF31CE /* ViewController.swift */,
-				ED5B960A26306C8300FF31CE /* AudioState.swift */,
 				ED5B95D9262F1B2400FF31CE /* Assets.xcassets */,
-				ED5B95DB262F1B2400FF31CE /* Main.storyboard */,
 				ED5B95DE262F1B2400FF31CE /* Info.plist */,
 				ED5B95DF262F1B2400FF31CE /* AudioSwitcher.entitlements */,
 			);
@@ -259,8 +244,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				ED5B95DA262F1B2400FF31CE /* Assets.xcassets in Resources */,
-				ED5B95DD262F1B2400FF31CE /* Main.storyboard in Resources */,
-				EDEF72C02644749C00635C47 /* StatusView.xib in Resources */,
 				ED46C3CB263855EB00366830 /* Stats.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,11 +269,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED5B95D8262F1B2300FF31CE /* ViewController.swift in Sources */,
-				ED5B95D6262F1B2300FF31CE /* AppDelegate.swift in Sources */,
-				EDEF72C4264476F700635C47 /* LoadableView.swift in Sources */,
-				EDEF72C22644760700635C47 /* StatusView.swift in Sources */,
-				ED5B960B26306C8300FF31CE /* AudioState.swift in Sources */,
+				ED5B96A0262F1B2300FF3B02 /* AudioMenuView.swift in Sources */,
+				ED5B96A0262F1B2300FF3B01 /* AudioSwitcherApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,14 +306,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		ED5B95DB262F1B2400FF31CE /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				ED5B95DC262F1B2400FF31CE /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */

@@ -4,6 +4,7 @@ import XCTest
 final class FakeOutputDevice: AudioOutputDevice {
     let name: String
     let id: UInt32
+    let transportType: AudioTransportType
     /// Like CoreAudio, only one device can be the default; the provider enforces it.
     var onBecameDefault: ((FakeOutputDevice) -> Void)?
     var isDefaultOutputDevice: Bool {
@@ -12,7 +13,9 @@ final class FakeOutputDevice: AudioOutputDevice {
     var volume: Float?
     var muted: Bool?
 
-    init(name: String, id: UInt32, isDefault: Bool = false, volume: Float? = 0.5, muted: Bool? = false) {
+    init(name: String, id: UInt32, isDefault: Bool = false, volume: Float? = 0.5, muted: Bool? = false,
+         transport: AudioTransportType = .other) {
+        self.transportType = transport
         self.name = name
         self.id = id
         self.isDefaultOutputDevice = isDefault
