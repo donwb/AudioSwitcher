@@ -55,12 +55,26 @@ struct AudioMenuView: View {
             if !model.inputRows.isEmpty {
                 Divider()
 
-                Text("Input")
-                    .font(.headline)
+                Button { model.setInputSectionExpanded(!model.isInputSectionExpanded) } label: {
+                    HStack(spacing: 6) {
+                        Image(systemName: "chevron.right")
+                            .font(.caption.weight(.semibold))
+                            .rotationEffect(.degrees(model.isInputSectionExpanded ? 90 : 0))
+                            .frame(width: 12)
+                        Text("Input")
+                            .font(.headline)
+                        Spacer()
+                    }
+                    .contentShape(Rectangle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityValue(model.isInputSectionExpanded ? "Expanded" : "Collapsed")
 
-                VStack(spacing: 2) {
-                    ForEach(model.inputRows) { row in
-                        DeviceRowView(row: row) { model.selectInput(row) }
+                if model.isInputSectionExpanded {
+                    VStack(spacing: 2) {
+                        ForEach(model.inputRows) { row in
+                            DeviceRowView(row: row) { model.selectInput(row) }
+                        }
                     }
                 }
             }
