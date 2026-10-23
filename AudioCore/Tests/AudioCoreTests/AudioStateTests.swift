@@ -29,9 +29,12 @@ final class FakeOutputDevice: AudioOutputDevice {
 }
 
 final class FakeProvider: AudioDeviceProvider {
-    var devices: [FakeOutputDevice]
+    var devices: [FakeOutputDevice] { didSet { wire() } }
     init(_ devices: [FakeOutputDevice]) {
         self.devices = devices
+        wire()
+    }
+    private func wire() {
         for d in devices {
             d.onBecameDefault = { [unowned self] new in
                 for other in self.devices where other !== new { other.isDefaultOutputDevice = false }

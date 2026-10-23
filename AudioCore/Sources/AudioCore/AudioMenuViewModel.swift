@@ -138,6 +138,20 @@ public final class AudioMenuViewModel: ObservableObject {
         refresh()
     }
 
+    /// Selects the Nth output device (1-based, ⌘1...⌘9). No-op when there is no such row.
+    public func selectOutput(number: Int) {
+        guard let row = DeviceOrdering.row(number: number, in: rows) else { return }
+        select(row)
+    }
+
+    /// Switches to the next output device in list order, wrapping (the global hotkey).
+    /// Counts as the chosen device for Sticky, like a click.
+    public func selectNextOutput() {
+        refresh()   // the popover may never have been opened; don't trust stale rows
+        guard let row = DeviceOrdering.next(in: rows) else { return }
+        select(row)
+    }
+
     /// Makes the input device the system default input. Not affected by Sticky.
     public func selectInput(_ row: AudioDeviceRow) {
         for d in inputProvider?.inputDevices ?? [] where d.name == row.name { d.isDefaultInputDevice = true }

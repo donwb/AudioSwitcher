@@ -17,8 +17,8 @@ struct AudioMenuView: View {
                 .font(.headline)
 
             VStack(spacing: 2) {
-                ForEach(model.rows) { row in
-                    DeviceRowView(row: row) { model.select(row) }
+                ForEach(Array(model.rows.enumerated()), id: \.element.id) { index, row in
+                    DeviceRowView(row: row, shortcutNumber: index < 9 ? index + 1 : nil) { model.select(row) }
                 }
             }
 
@@ -57,6 +57,7 @@ struct AudioMenuView: View {
                 Button("Quit") { NSApplication.shared.terminate(nil) }
                     .buttonStyle(.plain)
                     .font(.caption)
+                    .keyboardShortcut("q", modifiers: .command)
             }
         }
         .padding(14)
@@ -67,6 +68,8 @@ struct AudioMenuView: View {
 
 struct DeviceRowView: View {
     let row: AudioDeviceRow
+    /// 1...9 binds ⌘N to this row (output list only).
+    var shortcutNumber: Int? = nil
     let action: () -> Void
 
     var body: some View {
@@ -77,6 +80,9 @@ struct DeviceRowView: View {
                 Text(row.name)
                     .lineLimit(1)
                 Spacer()
+                if let n = shortcutNumber {
+                    Text("⌘\(n)").font(.caption).foregroundStyle(.secondary)
+                }
                 if row.isDefault {
                     Image(systemName: "checkmark")
                 }
@@ -86,6 +92,15 @@ struct DeviceRowView: View {
             .padding(.horizontal, 6)
         }
         .buttonStyle(.plain)
+        .background {
+            // Invisible twin carrying the shortcut, so the visible row keeps its custom look.
+            if let n = shortcutNumber, let key = n.description.first {
+                Button("", action: action)
+                    .keyboardShortcut(KeyEquivalent(key), modifiers: .command)
+                    .opacity(0)
+                    .accessibilityHidden(true)
+            }
+        }
         .accessibilityAddTraits(row.isDefault ? .isSelected : [])
     }
 }
