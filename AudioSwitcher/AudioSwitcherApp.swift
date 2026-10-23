@@ -38,7 +38,8 @@ struct AudioSwitcherApp: App {
                                   stickyPreference: StickyPreference(),
                                   chosenPreference: ChosenDevicePreference(),
                                   switchCounter: PlistSwitchCounter(url: docs.appendingPathComponent("Stats.plist")),
-                                  inputProvider: NativeInputProvider())
+                                  inputProvider: NativeInputProvider(),
+                                  loginItem: SMAppServiceLoginItem())
 
         // ⌃⌥⌘O: next output device, also while the popover is closed. Carbon hot keys
         // need no Accessibility permission.

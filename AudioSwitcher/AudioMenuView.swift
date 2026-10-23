@@ -34,6 +34,24 @@ struct AudioMenuView: View {
 
             Toggle("Sticky", isOn: Binding(get: { model.isSticky }, set: { model.setSticky($0) }))
 
+            if model.isLaunchAtLoginAvailable {
+                Toggle("Launch at login", isOn: Binding(get: { model.isLaunchAtLoginOn },
+                                                        set: { model.setLaunchAtLogin($0) }))
+                if let detail = model.launchAtLoginDetail {
+                    HStack(spacing: 6) {
+                        Text(detail)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        if model.loginItemStatus == .requiresApproval {
+                            Button("Open Settings") { model.openLoginItemSettings() }
+                                .buttonStyle(.plain)
+                                .font(.caption)
+                                .foregroundStyle(Color.accentColor)
+                        }
+                    }
+                }
+            }
+
             if !model.inputRows.isEmpty {
                 Divider()
 

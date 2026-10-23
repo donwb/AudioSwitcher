@@ -14,12 +14,30 @@ final class Fake: AudioOutputDevice {
     func outputVolume() -> Float? { volume }
     func isOutputMuted() -> Bool? { false }
 }
+final class FakeInput: AudioInputDevice {
+    let name: String, id: UInt32, transportType: AudioTransportType
+    var isDefaultInputDevice: Bool
+    init(_ n: String, _ id: UInt32, _ t: AudioTransportType, def: Bool = false) {
+        name = n; self.id = id; transportType = t; isDefaultInputDevice = def
+    }
+}
+struct InputProvider: AudioInputDeviceProvider {
+    let devices: [FakeInput]
+    var inputDevices: [AudioInputDevice] { devices }
+}
+final class FakeLogin: LoginItemControlling {
+    var status: LoginItemStatus
+    init(_ s: LoginItemStatus) { status = s }
+    func register() throws {}
+    func unregister() throws {}
+    func openSystemSettings() {}
+}
 struct Provider: AudioDeviceProvider {
     let devices: [Fake]
     var outputDevices: [AudioOutputDevice] { devices }
 }
 
-@MainActor func render(scheme: ColorScheme, to path: String) {
+@MainActor func render(scheme: ColorScheme, login: LoginItemStatus, to path: String) {
     let provider = Provider(devices: [
         Fake("MacBook Pro Speakers", 1, .builtIn, def: true),
         Fake("AirPods Pro", 2, .bluetooth),
@@ -30,7 +48,13 @@ struct Provider: AudioDeviceProvider {
     ])
     let suite = UserDefaults(suiteName: "render-\(UUID())")!
     let model = AudioMenuViewModel(provider: provider, stickyPreference: StickyPreference(defaults: suite),
-                                   chosenPreference: nil, switchCounter: InMemorySwitchCounter(total: 42))
+                                   chosenPreference: nil, switchCounter: InMemorySwitchCounter(total: 42),
+                                   inputProvider: InputProvider(devices: [
+                                       FakeInput("MacBook Pro Microphone", 11, .builtIn, def: true),
+                                       FakeInput("AirPods Pro", 12, .bluetooth),
+                                       FakeInput("USB DAC", 14, .usb),
+                                   ]),
+                                   loginItem: FakeLogin(login))
     let view = AudioMenuView(model: model)
         .background(scheme == .dark ? Color(white: 0.16) : Color(white: 0.96))
         .environment(\.colorScheme, scheme)
@@ -46,6 +70,7 @@ struct Provider: AudioDeviceProvider {
 
 MainActor.assumeIsolated {
     let out = CommandLine.arguments[1]
-    render(scheme: .light, to: "\(out)/popover-light.png")
-    render(scheme: .dark, to: "\(out)/popover-dark.png")
+    render(scheme: .light, login: .enabled, to: "\(out)/popover-light.png")
+    render(scheme: .dark, login: .enabled, to: "\(out)/popover-dark.png")
+    render(scheme: .light, login: .requiresApproval, to: "\(out)/popover-light-requires-approval.png")
 }

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Renders docs/screenshots/popover-{light,dark}.png headlessly with fake devices.
+# Renders docs/screenshots/popover-{light,dark,light-requires-approval}.png headlessly with fake devices.
 set -e
 cd "$(dirname "$0")/.."
 T=$(mktemp -d)

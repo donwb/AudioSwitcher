@@ -36,6 +36,10 @@ public final class AudioMenuViewModel: ObservableObject {
     @Published public private(set) var hasVolumeControl = false
     /// True when the current device is muted.
     @Published public private(set) var isMuted = false
+    /// Real status of the login item, re-read whenever the popover opens.
+    @Published public private(set) var loginItemStatus: LoginItemStatus = .disabled
+    /// Message from the last failed register/unregister, cleared on the next refresh.
+    @Published public private(set) var loginItemError: String?
     @Published public private(set) var isSticky: Bool
     @Published public private(set) var switchCount: Int
 
@@ -43,6 +47,7 @@ public final class AudioMenuViewModel: ObservableObject {
     public var volumeSymbolName: String { isMuted ? "speaker.slash" : "speaker.fill" }
 
     private let state: AudioState
+    private let loginItem: LoginItemControlling?
     private let inputProvider: AudioInputDeviceProvider?
     private let stickyPreference: StickyPreference
     private let counter: SwitchCounting
@@ -53,9 +58,11 @@ public final class AudioMenuViewModel: ObservableObject {
                 chosenPreference: ChosenDevicePreference?,
                 switchCounter: SwitchCounting,
                 inputProvider: AudioInputDeviceProvider? = nil,
+                loginItem: LoginItemControlling? = nil,
                 center: NotificationCenter = .default) {
         state = AudioState(provider: provider, chosenPreference: chosenPreference)
         self.inputProvider = inputProvider
+        self.loginItem = loginItem
         self.stickyPreference = stickyPreference
         counter = switchCounter
         isSticky = stickyPreference.isOn
@@ -100,7 +107,46 @@ public final class AudioMenuViewModel: ObservableObject {
             }
         refreshVolume()
         refreshInputs()
+        refreshLoginItem()
     }
+
+    // MARK: Launch at login
+
+    /// False without a login item backend: the toggle is hidden.
+    public var isLaunchAtLoginAvailable: Bool { loginItem != nil }
+
+    /// On when registered, including while approval is still pending.
+    public var isLaunchAtLoginOn: Bool { loginItemStatus == .enabled || loginItemStatus == .requiresApproval }
+
+    /// Caption under the toggle: an error, or why it isn't fully on yet.
+    public var launchAtLoginDetail: String? {
+        if let loginItemError { return loginItemError }
+        switch loginItemStatus {
+        case .requiresApproval: return "Requires approval in System Settings"
+        case .notFound: return "Unavailable for this build"
+        case .enabled, .disabled: return nil
+        }
+    }
+
+    private func refreshLoginItem() {
+        loginItemError = nil
+        if let loginItem { loginItemStatus = loginItem.status }
+    }
+
+    /// Registers or unregisters the login item, then shows the status it really ended up with.
+    public func setLaunchAtLogin(_ on: Bool) {
+        guard let loginItem else { return }
+        do {
+            if on { try loginItem.register() } else { try loginItem.unregister() }
+            loginItemError = nil
+        } catch {
+            loginItemError = error.localizedDescription
+        }
+        loginItemStatus = loginItem.status
+    }
+
+    /// Opens Login Items in System Settings (for "requires approval").
+    public func openLoginItemSettings() { loginItem?.openSystemSettings() }
 
     private func refreshInputs() {
         inputRows = (inputProvider?.inputDevices ?? [])
