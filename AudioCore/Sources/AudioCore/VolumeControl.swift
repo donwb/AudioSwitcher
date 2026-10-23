@@ -32,6 +32,13 @@ public struct VolumeControl {
         AudioPropertyKey(kAudioDevicePropertyMute, scope: output, element: 0)
     }
 
+    /// Every property that can change what the user sees: all volume controls and mute.
+    static func watchedKeys(channelCount: Int) -> [AudioPropertyKey] {
+        var keys = [mainVolumeKey, virtualMainVolumeKey, muteKey]
+        if channelCount > 0 { keys += (1...channelCount).map(channelVolumeKey) }
+        return keys
+    }
+
     private var channelKeys: [AudioPropertyKey] {
         guard channelCount > 0 else { return [] }
         return (1...channelCount).map(Self.channelVolumeKey).filter { store.hasProperty($0) }

@@ -27,6 +27,7 @@ struct AudioSwitcherApp: App {
     private static func makeModel() -> AudioMenuViewModel {
         DefaultOutputDeviceMonitor.shared.start()
         AudioDeviceListMonitor.shared.start()
+        OutputVolumeMonitor.shared.start()
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         return AudioMenuViewModel(provider: NativeAudioProvider(),
                                   stickyPreference: StickyPreference(),

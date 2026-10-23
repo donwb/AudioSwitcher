@@ -63,6 +63,32 @@ final class AudioMenuViewModelTests: XCTestCase {
         XCTAssertEqual(model.rows.map(\.name), ["AirPods", "MacBook Speakers", "TV"])
     }
 
+    // Live volume and mute (changed outside the app)
+    func testExternalVolumeChangeUpdatesTheSliderOnNotification() {
+        XCTAssertEqual(model.volume, 0.5, accuracy: 0.001)
+        speakers.volume = 0.8
+        center.post(name: .outputVolumeChanged, object: nil)
+        XCTAssertEqual(model.volume, 0.8, accuracy: 0.001)
+    }
+
+    func testExternalMuteShowsSlashIconAndUnmuteRestoresIt() {
+        XCTAssertFalse(model.isMuted)
+        XCTAssertEqual(model.volumeSymbolName, "speaker.fill")
+        speakers.muted = true
+        center.post(name: .outputVolumeChanged, object: nil)
+        XCTAssertTrue(model.isMuted)
+        XCTAssertEqual(model.volumeSymbolName, "speaker.slash")
+        speakers.muted = false
+        center.post(name: .outputVolumeChanged, object: nil)
+        XCTAssertEqual(model.volumeSymbolName, "speaker.fill")
+    }
+
+    func testMuteStateFollowsTheNewDefaultDevice() throws {
+        buds.muted = true
+        model.select(try row("AirPods"))
+        XCTAssertTrue(model.isMuted)
+    }
+
     // Selecting
     func testSelectingADeviceMakesItDefaultAndMovesTheCheckmark() throws {
         model.select(try row("AirPods"))

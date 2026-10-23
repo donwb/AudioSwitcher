@@ -22,7 +22,8 @@ private final class ObserverBag {
 /// All state and behaviour of the menu bar popover. Views only render it and
 /// forward user actions. Driven by an `AudioDeviceProvider`, so it runs on fakes.
 ///
-/// Live updates arrive as `.defaultOutputDeviceChanged` / `.audioDeviceListChanged`
+/// Live updates arrive as `.defaultOutputDeviceChanged` / `.audioDeviceListChanged` /
+/// `.outputVolumeChanged`
 /// notifications on `center`; both are posted on the main thread.
 @MainActor
 public final class AudioMenuViewModel: ObservableObject {
@@ -31,8 +32,13 @@ public final class AudioMenuViewModel: ObservableObject {
     @Published public private(set) var volume: Double = 0
     /// False when the current device has no settable volume.
     @Published public private(set) var hasVolumeControl = false
+    /// True when the current device is muted.
+    @Published public private(set) var isMuted = false
     @Published public private(set) var isSticky: Bool
     @Published public private(set) var switchCount: Int
+
+    /// Icon next to the volume slider: a slash when muted.
+    public var volumeSymbolName: String { isMuted ? "speaker.slash" : "speaker.fill" }
 
     private let state: AudioState
     private let stickyPreference: StickyPreference
@@ -61,12 +67,14 @@ public final class AudioMenuViewModel: ObservableObject {
             MainActor.assumeIsolated {
                 if note.name == .defaultOutputDeviceChanged {
                     self?.defaultOutputChanged()
+                } else if note.name == .outputVolumeChanged {
+                    self?.refreshVolume()
                 } else {
                     self?.refresh()
                 }
             }
         }
-        observers.tokens = [.defaultOutputDeviceChanged, .audioDeviceListChanged].map {
+        observers.tokens = [.defaultOutputDeviceChanged, .audioDeviceListChanged, .outputVolumeChanged].map {
             center.addObserver(forName: $0, object: nil, queue: nil, using: handler)
         }
     }
@@ -94,6 +102,7 @@ public final class AudioMenuViewModel: ObservableObject {
             hasVolumeControl = false
             volume = 0
         }
+        isMuted = state.ActiveOutputDevice.map { state.IsDeviceMuted(selectedDevice: $0) } ?? false
     }
 
     private func defaultOutputChanged() {

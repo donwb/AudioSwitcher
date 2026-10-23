@@ -25,7 +25,8 @@ struct AudioMenuView: View {
             Divider()
 
             HStack(spacing: 8) {
-                Image(systemName: "speaker.fill").foregroundStyle(.secondary)
+                Image(systemName: model.volumeSymbolName).foregroundStyle(.secondary)
+                    .frame(width: 16)
                 Slider(value: Binding(get: { model.volume }, set: { model.setVolume($0) }), in: 0...1)
                     .disabled(!model.hasVolumeControl)
                 Image(systemName: "speaker.wave.3.fill").foregroundStyle(.secondary)
