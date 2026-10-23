@@ -42,6 +42,8 @@ public final class AudioMenuViewModel: ObservableObject {
     @Published public private(set) var loginItemError: String?
     @Published public private(set) var isSticky: Bool
     @Published public private(set) var switchCount: Int
+    /// Whether the Input section shows its devices. Collapsed by default.
+    @Published public private(set) var isInputSectionExpanded: Bool
 
     /// Icon next to the volume slider: a slash when muted.
     public var volumeSymbolName: String { isMuted ? "speaker.slash" : "speaker.fill" }
@@ -50,6 +52,7 @@ public final class AudioMenuViewModel: ObservableObject {
     private let loginItem: LoginItemControlling?
     private let inputProvider: AudioInputDeviceProvider?
     private let stickyPreference: StickyPreference
+    private let inputSectionPreference: InputSectionPreference?
     private let counter: SwitchCounting
     private let observers: ObserverBag
 
@@ -59,12 +62,15 @@ public final class AudioMenuViewModel: ObservableObject {
                 switchCounter: SwitchCounting,
                 inputProvider: AudioInputDeviceProvider? = nil,
                 loginItem: LoginItemControlling? = nil,
+                inputSectionPreference: InputSectionPreference? = nil,
                 center: NotificationCenter = .default) {
         state = AudioState(provider: provider, chosenPreference: chosenPreference)
         self.inputProvider = inputProvider
         self.loginItem = loginItem
         self.stickyPreference = stickyPreference
         counter = switchCounter
+        self.inputSectionPreference = inputSectionPreference
+        isInputSectionExpanded = inputSectionPreference?.isExpanded ?? false
         isSticky = stickyPreference.isOn
         switchCount = switchCounter.total
         observers = ObserverBag(center: center)
@@ -202,6 +208,12 @@ public final class AudioMenuViewModel: ObservableObject {
     public func selectInput(_ row: AudioDeviceRow) {
         for d in inputProvider?.inputDevices ?? [] where d.name == row.name { d.isDefaultInputDevice = true }
         refreshInputs()
+    }
+
+    /// Expands or collapses the Input section and remembers the choice.
+    public func setInputSectionExpanded(_ expanded: Bool) {
+        inputSectionPreference?.isExpanded = expanded
+        isInputSectionExpanded = expanded
     }
 
     /// Sets the current device's volume. No-op without a volume control.
