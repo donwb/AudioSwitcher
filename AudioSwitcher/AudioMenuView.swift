@@ -34,6 +34,19 @@ struct AudioMenuView: View {
 
             Toggle("Sticky", isOn: Binding(get: { model.isSticky }, set: { model.setSticky($0) }))
 
+            if !model.inputRows.isEmpty {
+                Divider()
+
+                Text("Input")
+                    .font(.headline)
+
+                VStack(spacing: 2) {
+                    ForEach(model.inputRows) { row in
+                        DeviceRowView(row: row) { model.selectInput(row) }
+                    }
+                }
+            }
+
             Divider()
 
             HStack {

@@ -29,6 +29,8 @@ private final class ObserverBag {
 public final class AudioMenuViewModel: ObservableObject {
     @Published public private(set) var rows: [AudioDeviceRow] = []
     /// Volume of the current default device, 0...1.
+    /// Input devices, sorted by name. Empty without an input provider.
+    @Published public private(set) var inputRows: [AudioDeviceRow] = []
     @Published public private(set) var volume: Double = 0
     /// False when the current device has no settable volume.
     @Published public private(set) var hasVolumeControl = false
@@ -41,6 +43,7 @@ public final class AudioMenuViewModel: ObservableObject {
     public var volumeSymbolName: String { isMuted ? "speaker.slash" : "speaker.fill" }
 
     private let state: AudioState
+    private let inputProvider: AudioInputDeviceProvider?
     private let stickyPreference: StickyPreference
     private let counter: SwitchCounting
     private let observers: ObserverBag
@@ -49,8 +52,10 @@ public final class AudioMenuViewModel: ObservableObject {
                 stickyPreference: StickyPreference,
                 chosenPreference: ChosenDevicePreference?,
                 switchCounter: SwitchCounting,
+                inputProvider: AudioInputDeviceProvider? = nil,
                 center: NotificationCenter = .default) {
         state = AudioState(provider: provider, chosenPreference: chosenPreference)
+        self.inputProvider = inputProvider
         self.stickyPreference = stickyPreference
         counter = switchCounter
         isSticky = stickyPreference.isOn
@@ -67,6 +72,8 @@ public final class AudioMenuViewModel: ObservableObject {
             MainActor.assumeIsolated {
                 if note.name == .defaultOutputDeviceChanged {
                     self?.defaultOutputChanged()
+                } else if note.name == .defaultInputDeviceChanged {
+                    self?.refreshInputs()
                 } else if note.name == .outputVolumeChanged {
                     self?.refreshVolume()
                 } else {
@@ -74,7 +81,7 @@ public final class AudioMenuViewModel: ObservableObject {
                 }
             }
         }
-        observers.tokens = [.defaultOutputDeviceChanged, .audioDeviceListChanged, .outputVolumeChanged].map {
+        observers.tokens = [.defaultOutputDeviceChanged, .audioDeviceListChanged, .outputVolumeChanged, .defaultInputDeviceChanged].map {
             center.addObserver(forName: $0, object: nil, queue: nil, using: handler)
         }
     }
@@ -92,6 +99,17 @@ public final class AudioMenuViewModel: ObservableObject {
                 return AudioDeviceRow(id: d.id, name: d.name, transportType: transport, isDefault: d.enabled)
             }
         refreshVolume()
+        refreshInputs()
+    }
+
+    private func refreshInputs() {
+        inputRows = (inputProvider?.inputDevices ?? [])
+            .map { AudioDeviceRow(id: $0.id, name: $0.name, transportType: $0.transportType,
+                                  isDefault: $0.isDefaultInputDevice) }
+            .sorted {
+                let order = $0.name.localizedCaseInsensitiveCompare($1.name)
+                return order == .orderedSame ? $0.id < $1.id : order == .orderedAscending
+            }
     }
 
     private func refreshVolume() {
@@ -118,6 +136,12 @@ public final class AudioMenuViewModel: ObservableObject {
     public func select(_ row: AudioDeviceRow) {
         state.MakeActiveOutputDevice(device: MyAudioDevice(name: row.name, id: row.id, enabled: false))
         refresh()
+    }
+
+    /// Makes the input device the system default input. Not affected by Sticky.
+    public func selectInput(_ row: AudioDeviceRow) {
+        for d in inputProvider?.inputDevices ?? [] where d.name == row.name { d.isDefaultInputDevice = true }
+        refreshInputs()
     }
 
     /// Sets the current device's volume. No-op without a volume control.

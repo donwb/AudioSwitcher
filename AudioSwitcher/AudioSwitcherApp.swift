@@ -28,10 +28,12 @@ struct AudioSwitcherApp: App {
         DefaultOutputDeviceMonitor.shared.start()
         AudioDeviceListMonitor.shared.start()
         OutputVolumeMonitor.shared.start()
+        DefaultInputDeviceMonitor.shared.start()
         let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         return AudioMenuViewModel(provider: NativeAudioProvider(),
                                   stickyPreference: StickyPreference(),
                                   chosenPreference: ChosenDevicePreference(),
-                                  switchCounter: PlistSwitchCounter(url: docs.appendingPathComponent("Stats.plist")))
+                                  switchCounter: PlistSwitchCounter(url: docs.appendingPathComponent("Stats.plist")),
+                                  inputProvider: NativeInputProvider())
     }
 }
