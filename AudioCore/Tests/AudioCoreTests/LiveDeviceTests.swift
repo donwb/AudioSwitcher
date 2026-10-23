@@ -22,6 +22,12 @@ final class LiveDeviceTests: XCTestCase {
         }
     }
 
+    func testTransportTypeIsReadableForEveryDevice() {
+        for d in devices {
+            XCTAssertTrue(AudioTransportType.allCases.contains(d.transportType))
+        }
+    }
+
     func testDeviceNamesAreNonEmpty() {
         for d in devices {
             XCTAssertFalse(d.name.isEmpty, "device \(d.id) has empty name")

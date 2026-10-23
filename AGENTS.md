@@ -4,7 +4,7 @@ A macOS menu bar app for choosing the audio output device and its volume. It's a
 
 ## Layout
 
-- `AudioSwitcher/`: the AppKit app (the product name is **AudioSticker**). `ViewController.swift` and `Main.storyboard` hold the UI.
+- `AudioSwitcher/`: the AppKit app (the product name is **AudioSticker**). `AudioSwitcherApp.swift` (a SwiftUI `MenuBarExtra`, `.window` style) and `AudioMenuView.swift` hold the UI; all state and behaviour is in AudioCore's `AudioMenuViewModel`.
 - `AudioCore/`: a local Swift package that holds the audio logic and its tests. It talks to CoreAudio directly, with no third-party wrapper.
   - `AudioCore.swift` defines the `AudioState`, `AudioOutputDevice` and `AudioDeviceProvider` protocols and Sticky.
   - `NativeCoreAudio.swift`, `PropertyStore.swift` and `VolumeControl.swift` talk to the hardware.
@@ -22,7 +22,7 @@ Both must pass before you open a PR. Code signing isn't available, and there is 
 
 ## Where code goes
 
-- **Put new logic in AudioCore, not in the app.** `ViewController` should only wire UI events to AudioCore calls. SwiftPM picks up new files in AudioCore automatically. A new file in the app target needs `project.pbxproj` edits, so avoid that.
+- **Put new logic in AudioCore, not in the app.** SwiftUI views should only render `AudioMenuViewModel` and forward events to it. SwiftPM picks up new files in AudioCore automatically. A new file in the app target needs `project.pbxproj` edits, so avoid that.
 - **Test with fakes.** Use `FakeProvider` / `FakeOutputDevice` (in `AudioStateTests.swift`) and `FakePropertyStore` (in `VolumeControlTests.swift`). For settings, use a throwaway `UserDefaults(suiteName:)` and remove it in `tearDown`.
 - **Tests must never change real audio.** No test may change the real default output device or volume. `LiveDeviceTests` are read-only and must stay that way. Anything that switches devices or sets volume is tested through fakes.
 - Each behaviour you add or fix gets at least one test. Never delete or weaken a test to make the suite pass.

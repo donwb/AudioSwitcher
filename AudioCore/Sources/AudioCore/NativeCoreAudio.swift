@@ -16,6 +16,8 @@ public final class NativeAudioDevice: AudioOutputDevice {
 
     public var name: String { NativeCoreAudio.deviceName(id) ?? "" }
 
+    public var transportType: AudioTransportType { NativeCoreAudio.transportType(id) }
+
     public var isDefaultOutputDevice: Bool {
         get { NativeCoreAudio.defaultOutputDeviceID() == id }
         set { if newValue { _ = NativeCoreAudio.setDefaultOutputDeviceID(id) } }
@@ -76,6 +78,16 @@ public enum NativeCoreAudio {
         guard AudioObjectGetPropertyData(id, &a, 0, nil, &size, &ref) == noErr,
               let cf = ref else { return nil }
         return cf.takeRetainedValue() as String
+    }
+
+    /// Read-only transport type of a device (`.other` if it can't be read).
+    public static func transportType(_ id: AudioObjectID) -> AudioTransportType {
+        var a = AudioObjectPropertyAddress(mSelector: kAudioDevicePropertyTransportType,
+                                           mScope: kAudioObjectPropertyScopeGlobal, mElement: 0)
+        var value = UInt32(0)
+        var size = UInt32(MemoryLayout<UInt32>.size)
+        guard AudioObjectGetPropertyData(id, &a, 0, nil, &size, &value) == noErr else { return .other }
+        return AudioTransportType(coreAudioValue: value)
     }
 
     public static func defaultOutputDeviceID() -> UInt32? {
