@@ -17,21 +17,53 @@ struct AudioMenuView: View {
                 .font(.headline)
 
             VStack(spacing: 2) {
-                ForEach(model.rows) { row in
-                    DeviceRowView(row: row) { model.select(row) }
+                ForEach(Array(model.rows.enumerated()), id: \.element.id) { index, row in
+                    DeviceRowView(row: row, shortcutNumber: index < 9 ? index + 1 : nil) { model.select(row) }
                 }
             }
 
             Divider()
 
             HStack(spacing: 8) {
-                Image(systemName: "speaker.fill").foregroundStyle(.secondary)
+                Image(systemName: model.volumeSymbolName).foregroundStyle(.secondary)
+                    .frame(width: 16)
                 Slider(value: Binding(get: { model.volume }, set: { model.setVolume($0) }), in: 0...1)
                     .disabled(!model.hasVolumeControl)
                 Image(systemName: "speaker.wave.3.fill").foregroundStyle(.secondary)
             }
 
             Toggle("Sticky", isOn: Binding(get: { model.isSticky }, set: { model.setSticky($0) }))
+
+            if model.isLaunchAtLoginAvailable {
+                Toggle("Launch at login", isOn: Binding(get: { model.isLaunchAtLoginOn },
+                                                        set: { model.setLaunchAtLogin($0) }))
+                if let detail = model.launchAtLoginDetail {
+                    HStack(spacing: 6) {
+                        Text(detail)
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                        if model.loginItemStatus == .requiresApproval {
+                            Button("Open Settings") { model.openLoginItemSettings() }
+                                .buttonStyle(.plain)
+                                .font(.caption)
+                                .foregroundStyle(Color.accentColor)
+                        }
+                    }
+                }
+            }
+
+            if !model.inputRows.isEmpty {
+                Divider()
+
+                Text("Input")
+                    .font(.headline)
+
+                VStack(spacing: 2) {
+                    ForEach(model.inputRows) { row in
+                        DeviceRowView(row: row) { model.selectInput(row) }
+                    }
+                }
+            }
 
             Divider()
 
@@ -43,6 +75,7 @@ struct AudioMenuView: View {
                 Button("Quit") { NSApplication.shared.terminate(nil) }
                     .buttonStyle(.plain)
                     .font(.caption)
+                    .keyboardShortcut("q", modifiers: .command)
             }
         }
         .padding(14)
@@ -53,6 +86,8 @@ struct AudioMenuView: View {
 
 struct DeviceRowView: View {
     let row: AudioDeviceRow
+    /// 1...9 binds ⌘N to this row (output list only).
+    var shortcutNumber: Int? = nil
     let action: () -> Void
 
     var body: some View {
@@ -63,6 +98,9 @@ struct DeviceRowView: View {
                 Text(row.name)
                     .lineLimit(1)
                 Spacer()
+                if let n = shortcutNumber {
+                    Text("⌘\(n)").font(.caption).foregroundStyle(.secondary)
+                }
                 if row.isDefault {
                     Image(systemName: "checkmark")
                 }
@@ -72,6 +110,15 @@ struct DeviceRowView: View {
             .padding(.horizontal, 6)
         }
         .buttonStyle(.plain)
+        .background {
+            // Invisible twin carrying the shortcut, so the visible row keeps its custom look.
+            if let n = shortcutNumber, let key = n.description.first {
+                Button("", action: action)
+                    .keyboardShortcut(KeyEquivalent(key), modifiers: .command)
+                    .opacity(0)
+                    .accessibilityHidden(true)
+            }
+        }
         .accessibilityAddTraits(row.isDefault ? .isSelected : [])
     }
 }

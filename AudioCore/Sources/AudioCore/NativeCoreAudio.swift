@@ -53,7 +53,7 @@ public enum NativeCoreAudio {
     }
 
     /// Number of output channels (sum over output stream buffers).
-    static func outputChannelCount(_ id: AudioObjectID) -> Int {
+    public static func outputChannelCount(_ id: AudioObjectID) -> Int {
         var a = AudioObjectPropertyAddress(mSelector: kAudioDevicePropertyStreamConfiguration,
                                            mScope: outputScope, mElement: 0)
         var size = UInt32(0)
